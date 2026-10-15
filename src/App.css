@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --grey-50:  #f8fafc;
+  --grey-100: #f1f5f9;
+  --grey-200: #e2e8f0;
+  --grey-300: #cbd5e1;
+  --grey-400: #94a3b8;
+  --grey-500: #64748b;
+  --grey-600: #475569;
+  --grey-700: #334155;
+  --grey-800: #1e293b;
+  --grey-900: #0f172a;
+
+  --orange-50:  #fff7ed;
+  --orange-100: #ffedd5;
+  --orange-200: #fed7aa;
+  --orange-300: #fdba74;
+  --orange-400: #fb923c;
+  --orange-500: #f97316;
+  --orange-600: #ea580c;
+  --orange-700: #c2410c;
+  --orange-800: #9a3412;
+  --orange-900: #7c2d12;
+
+}
+
+#root{
+  margin: 0;
+  padding: 0;
+  gap: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+body{
+  padding: 0;
+  margin: 0;
+  font-family: 'inter',system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.header{
+  width: 100%;
+  height: 80px;
+  display: flex;
+  background-color: var(--grey-400);
+}
+
+.header a{
+  width: 80px;
+  height: 80px;
+}
+
+.button-container{
+  display: flex;
+  height: 100%;
+  width: 560px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header .button-container p{
+  width: fit-content;
+  height: 25px;
+  font-size: 18px;
+  color: white;
+}
+
+.header .button-container button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 140px;
+  height: 60px;
+  border: 0;
+  position: relative;
+  background-color: transparent;
+}
+
+.header .button-container button p{
+  position: relative;
+}
+
+.header .button-container button p::after{
+  content: "";
+  width: 0%;
+  height: 2px;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  background-color: var(--grey-100);
+  transition: width 0.1s ease;
+}
+
+.header .button-container button:hover > p::after{
+  width: 110%;
+}
+
+.header .button-container button:hover{
+  cursor: pointer;
+}
+
+.hero{
+  background-color: red;
+  width: 100%;
+  height: 500px;
+  padding: 50px;
+  box-sizing: border-box;
+}
+
+.hero button{
+  padding: 20px;
+  height: fit-content;
+  max-height: 40px;
+  border-radius: 999px;
+  background-color: var(--orange-400);
+  color: white;
+  border: var(--orange-500);
+  font-weight: 600;
+  transition: background-color 0.15s ease;
+}
+
+.hero button:hover{
+  cursor: pointer;
+  background-color: white;
+  color: var(--orange-400);
+}
+
+.subjects{
+  display: flex;
+  gap: 8px;
+}
