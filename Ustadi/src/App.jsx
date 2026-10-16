@@ -18,6 +18,11 @@ function App() {
           <button><p>Contact</p></button>
           <button><p>Help</p></button>
         </div>
+        <div className='accounts'>
+          <button className='signup'>Sign up</button>
+          <button className='signin'>Sign in</button>
+          <button className='profile'></button>
+        </div>
       </div>
       <div className='hero'>
         <h1>Find the perfect personal tutor <br />With the perfect </h1>

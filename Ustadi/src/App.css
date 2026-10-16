@@ -33,6 +33,10 @@
   flex-direction: column;
 }
 
+*{
+  font-family: 'inter',system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
 body{
   padding: 0;
   margin: 0;
@@ -43,7 +47,10 @@ body{
   width: 100%;
   height: 80px;
   display: flex;
-  background-color: var(--grey-400);
+  background-color: var(--orange-500);
+  box-shadow: 10px 10px 40px rgba(0,0,0,0.2);
+  position: relative;
+  align-items: center;
 }
 
 .header a{
@@ -79,12 +86,15 @@ body{
 
 .header .button-container button p{
   position: relative;
+  z-index: 0;
+  transition: color 0.1s ease;
 }
 
 .header .button-container button p::after{
   content: "";
   width: 0%;
-  height: 2px;
+  height: 110%;
+  z-index: -1;
   position: absolute;
   left: 50%;
   bottom: 0;
@@ -93,8 +103,12 @@ body{
   transition: width 0.1s ease;
 }
 
+.header .button-container button:hover > p{
+  color: black;
+}
+
 .header .button-container button:hover > p::after{
-  width: 110%;
+  width: 130%;
 }
 
 .header .button-container button:hover{
@@ -102,7 +116,6 @@ body{
 }
 
 .hero{
-  background-color: red;
   width: 100%;
   height: 500px;
   padding: 50px;
@@ -110,15 +123,27 @@ body{
 }
 
 .hero button{
-  padding: 20px;
+  padding: 15px;
+  text-align: center;
   height: fit-content;
-  max-height: 40px;
+  max-height: 50px;
+  max-width: max-content;
   border-radius: 999px;
-  background-color: var(--orange-400);
-  color: white;
-  border: var(--orange-500);
+  background-color: var(--orange-200);
+  border: 2px solid var(--orange-400);
+  color: black;
   font-weight: 600;
   transition: background-color 0.15s ease;
+}
+
+.hero h1{
+  font-size: 60px;
+  line-height: 0.9em;
+}
+
+.hero p{
+  font-size: 25px;
+  font-weight: 500;
 }
 
 .hero button:hover{
@@ -130,4 +155,45 @@ body{
 .subjects{
   display: flex;
   gap: 8px;
+  max-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.accounts{
+  width: fit-content;
+  position: absolute;
+  right: 40px;
+  gap: 8px;
+  display: flex;
+}
+
+.accounts button{
+  border-radius: 25px;
+  border: 0;
+}
+
+.accounts .signup, .signin{
+  width: fit-content;
+  padding: 0px 18px;
+  font-weight: 800;
+}
+
+.accounts .signup, .signin:hover{
+  cursor: pointer;
+}
+
+.accounts .profile{
+    width: 50px;
+    height: 50px;
+}
+
+.accounts .profile:hover{
+  cursor: pointer;
+}
+
+.accounts .signin{
+  background-color: var(--orange-600);
+  border: 2px solid white;
+  color: white;
 }
