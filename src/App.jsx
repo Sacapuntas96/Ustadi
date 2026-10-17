@@ -51,8 +51,37 @@ function App() {
         <button>Apply</button>
       </div>
       <div className='footer'>
-
+  <div className='footer-top'>
+    <div className='first-container'>
+      <h1>Ustadi<span>.</span></h1>
+      <p className='footer-tagline'>
+        Find the right tutor for every subject, at the right price.
+      </p>
+      <label htmlFor='review'>Want to leave us a review ?</label>
+      <div className='submit'>
+        <input id='review' type="text" placeholder='I think that...' />
+        <button>Submit</button>
       </div>
+    </div>
+
+    <div className='footer-links'>
+      <div className='footer-column'>
+        <h2>Support</h2>
+        <button>Get help</button>
+        <button>How it works</button>
+      </div>
+      <div className='footer-column'>
+        <h2>Legal</h2>
+        <button>Privacy policy</button>
+      </div>
+    </div>
+  </div>
+
+  <div className='footer-bottom'>
+    <span>© 2026 Ustadi. All rights reserved.</span>
+    <span>Made in Morocco 🇲🇦</span>
+  </div>
+</div>
     </>
   )
 }
