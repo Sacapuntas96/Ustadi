@@ -14,7 +14,7 @@ export default function Login(){
             <input type="text" />
             <label>Password</label>
             <input type="password" />
-            <Link to="" className='nav-link'><p>Forogt password ?</p></Link>
+            <Link to="/forgot-password" className='nav-link'><p>Forogt password ?</p></Link>
             <button>Login</button>
           </form>
         </div>

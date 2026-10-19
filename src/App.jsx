@@ -1,6 +1,7 @@
 import { Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login"
+import ForgotPassword from "./pages/ForgotPassword";
 
 function App() {
   return (
@@ -8,6 +9,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />}/>
         <Route path="/login" element={<Login />}/>
+        <Route path="/forgot-password" element={<ForgotPassword />}/>
       </Routes>
     </>
   )
