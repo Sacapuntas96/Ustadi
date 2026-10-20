@@ -1,4 +1,4 @@
-import './../Home.css'
+import './../Index.css'
 import {Link} from "react-router-dom";
 
 export default function Home() {
@@ -8,7 +8,7 @@ export default function Home() {
         <a href=""><img src="main.html" alt="" />
         </a>
         <div className='button-container'>
-          <button><p>Home</p></button>
+          <Link to={"/"} className='nav-link'><button><p>Home</p></button></Link>
           <button><p>Subjects</p></button>
           <button><p>Contact</p></button>
           <button><p>Help</p></button>
@@ -68,12 +68,12 @@ export default function Home() {
     <div className='footer-links'>
       <div className='footer-column'>
         <h2>Support</h2>
-        <button>Get help</button>
+        <Link to={"/get-help"} className="nav-link"><button>Get help</button></Link>
         <button>How it works</button>
       </div>
       <div className='footer-column'>
         <h2>Legal</h2>
-        <button>Privacy policy</button>
+        <Link to="/privacy-policy" className="nav-link"><button>Privacy policy</button></Link>
       </div>
     </div>
   </div>
