@@ -4,7 +4,8 @@ import Login from "./pages/Login"
 import ForgotPassword from "./pages/ForgotPassword";
 import PrivacyPolicy from "./pages/PrivacyPolicy"
 import GetHelp from "./pages/GetHelp";
-import Listing from "./pages/Listing"
+import Listing from "./pages/Listing";
+import Signin from "./pages/Signin"
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/privacy-policy" element={<PrivacyPolicy/>}/>
         <Route path="/get-help" element={<GetHelp/>}/>
         <Route path="/listing" element={<Listing />} />
+        <Route path="/sign-in" element={<Signin />} />
       </Routes>
     </>
   )

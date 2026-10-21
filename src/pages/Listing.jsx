@@ -30,11 +30,12 @@ export default function Listing() {
           <Link to='/login' className='nav-link'>
             <button className='login'>Login</button>
           </Link>
-          <button className='signin'>Sign in</button>
+          <Link to={"/sign-in"} className="nav-link"><button className='signin'>Sign in</button></Link>
           <button className='profile'></button>
         </div>
       </div>
       <div className="listing-container">
+        <div></div>
         <div className="filters">
           <div className="dropdown">
             <p>Subject ↓</p>
