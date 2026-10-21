@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
 
 /* =========================================================
    Variables
@@ -6,7 +6,7 @@
 
 :root {
   /* Warm grey */
-  --grey-50:  #fafaf9;
+  --grey-50: #fafaf9;
   --grey-100: #f4f3f1;
   --grey-200: #e7e5e2;
   --grey-300: #d3d0cc;
@@ -18,7 +18,7 @@
   --grey-900: #1a1917;
 
   /* Orange */
-  --orange-50:  #fff6ee;
+  --orange-50: #fff6ee;
   --orange-100: #ffe8d3;
   --orange-200: #ffd0a6;
   --orange-300: #ffb170;
@@ -36,7 +36,12 @@
 
 * {
   box-sizing: border-box;
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-family:
+    "Plus Jakarta Sans",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    sans-serif;
 }
 
 #root {
@@ -68,7 +73,7 @@ body {
 .landscape {
   width: 65%;
   height: 100%;
-  background-image: url('./assets/tutoring_header.jpg');
+  background-image: url("./assets/tutoring_header.jpg");
   background-position: center;
   background-size: 120%;
   background-repeat: no-repeat;
@@ -306,7 +311,11 @@ form p {
   border-radius: 12px;
   border: 2px solid transparent;
   cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease;
 }
 
 .login {
@@ -375,7 +384,12 @@ form p {
 
 .hero h1 span {
   color: var(--grey-900);
-  background: linear-gradient(transparent 62%, var(--orange-300) 62%, var(--orange-300) 92%, transparent 92%);
+  background: linear-gradient(
+    transparent 62%,
+    var(--orange-300) 62%,
+    var(--orange-300) 92%,
+    transparent 92%
+  );
   padding: 0 4px;
 }
 
@@ -422,7 +436,9 @@ form p {
   font-size: 16px;
   color: var(--grey-900);
   background-color: var(--grey-50);
-  transition: border-color 0.15s ease, background-color 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
 }
 
 .search input[type="text"]::placeholder {
@@ -445,7 +461,9 @@ form p {
   color: white;
   font-size: 16px;
   font-weight: 700;
-  transition: background-color 0.15s ease, border-color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
 }
 
 .search button:hover {
@@ -474,7 +492,11 @@ form p {
   border: 1px solid var(--grey-200);
   font-size: 14px;
   font-weight: 600;
-  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease;
 }
 
 .subjects button:hover {
@@ -504,7 +526,11 @@ form p {
   box-sizing: border-box;
   color: white;
   background:
-    radial-gradient(circle at 90% 0%, rgba(255, 255, 255, 0.18), transparent 45%),
+    radial-gradient(
+      circle at 90% 0%,
+      rgba(255, 255, 255, 0.18),
+      transparent 45%
+    ),
     var(--orange-600);
 }
 
@@ -537,7 +563,9 @@ form p {
   font-size: 17px;
   font-weight: 700;
   cursor: pointer;
-  transition: background-color 0.15s ease, transform 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    transform 0.15s ease;
 }
 
 .tutor button::after {
@@ -633,7 +661,9 @@ form p {
   background-color: var(--grey-800);
   color: white;
   font-size: 15px;
-  transition: border-color 0.15s ease, background-color 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
 }
 
 .first-container input[type="text"]::placeholder {
@@ -657,7 +687,9 @@ form p {
   font-size: 15px;
   font-weight: 700;
   cursor: pointer;
-  transition: background-color 0.15s ease, transform 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    transform 0.15s ease;
 }
 
 .first-container button:hover {
@@ -698,7 +730,9 @@ form p {
   color: var(--grey-300);
   font-size: 15px;
   cursor: pointer;
-  transition: color 0.15s ease, transform 0.15s ease;
+  transition:
+    color 0.15s ease,
+    transform 0.15s ease;
 }
 
 .footer-column button:hover {
@@ -769,4 +803,72 @@ form p {
   .footer-top {
     gap: 32px;
   }
+}
+
+.listing-container{
+  border: 2px solid var(--orange-500);
+  border-radius: 10px;
+  background-color: white;
+  margin: 100px;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+}
+
+.filters{
+  width: 400px;
+  height: fit-content;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.search-bar{
+  display: flex;
+  height: fit-content;
+}
+
+.search-bar input[type="text"]{
+  width: 700px;
+  padding: 15px;
+  font-size: 15px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+  border-right: 0;
+}
+
+.search-bar button{
+  padding: 10px 12px;
+  font-size: 15px;
+  border-radius: 5px;
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+  border: 0;
+  background-color: var(--orange-500);
+  color: white;
+  font-weight: 600;
+}   
+
+.search-bar button:hover{
+  cursor: pointer;
+  background-color: var(--orange-600);
+}
+
+.dropdown{
+  border: 1px solid var(--grey-300);
+  width: fit-content;
+  padding: 6px 8px;
+  box-sizing: border-box;
+  border-radius: 0px;
+  background-color: var(--grey-100);
+  height: fit-content;
+}
+
+.dropdown p{
+  margin: 0;
+}
+
+.dropdown:hover{
+  cursor: pointer;
 }

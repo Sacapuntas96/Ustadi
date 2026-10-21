@@ -4,6 +4,7 @@ import Login from "./pages/Login"
 import ForgotPassword from "./pages/ForgotPassword";
 import PrivacyPolicy from "./pages/PrivacyPolicy"
 import GetHelp from "./pages/GetHelp";
+import Listing from "./pages/Listing"
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />}/>
         <Route path="/privacy-policy" element={<PrivacyPolicy/>}/>
         <Route path="/get-help" element={<GetHelp/>}/>
+        <Route path="/listing" element={<Listing />} />
       </Routes>
     </>
   )

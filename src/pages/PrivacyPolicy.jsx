@@ -8,8 +8,8 @@ export default function PrivacyPolicy(){
                 <a href=""><img src="main.html" alt="" />
                 </a>
                 <div className='button-container'>
-          <Link to={"/"} className='nav-link'><button><p>Home</p></button></Link>
-                <button><p>Subjects</p></button>
+                <Link to={"/"} className='nav-link'><button><p>Home</p></button></Link>
+                <Link to={"/listing"} className="nav-link"><button><p>Subjects</p></button></Link>
                 <button><p>Contact</p></button>
                 <button><p>Help</p></button>
                 </div>
