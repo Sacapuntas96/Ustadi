@@ -30,19 +30,21 @@ export default function Listing() {
           <Link to='/login' className='nav-link'>
             <button className='login'>Login</button>
           </Link>
-          <Link to={"/sign-in"} className="nav-link"><button className='signin'>Sign in</button></Link>
+          <Link to={"/sign-in"} className='nav-link'>
+            <button className='signin'>Sign in</button>
+          </Link>
           <button className='profile'></button>
         </div>
       </div>
-      <div className="listing-container">
+      <div className='listing-container'>
         <div></div>
-        <div className="filters">
-          <div className="dropdown">
+        <div className='filters'>
+          <div className='dropdown'>
             <p>Subject ↓</p>
           </div>
         </div>
-        <div className="search-bar">
-          <input type="text" placeholder="Search for a specific subject..."/>
+        <div className='search-bar'>
+          <input type='text' placeholder='Search for a specific subject...' />
           <button>Search</button>
         </div>
       </div>
