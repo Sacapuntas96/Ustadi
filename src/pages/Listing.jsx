@@ -22,16 +22,20 @@ export default function Listing() {
           <button>
             <p>Contact</p>
           </button>
-          <button>
-            <p>Help</p>
-          </button>
+          <Link to={"/get-help"} className='nav-link'>
+            <button>
+              <p>Help</p>
+            </button>
+          </Link>
         </div>
         <div className='account'>
           <Link to='/login' className='nav-link'>
             <button className='login'>Login</button>
           </Link>
           <Link to={"/sign-in"} className='nav-link'>
+            <Link to={"/sign-in"} className='nav-link'>
             <button className='signin'>Sign in</button>
+          </Link>
           </Link>
           <button className='profile'></button>
         </div>

@@ -894,3 +894,7 @@ form div input{
   flex-direction: column;
   width: 100%;
 }
+
+.get-help-content{
+  padding: 80px 100px;
+}
