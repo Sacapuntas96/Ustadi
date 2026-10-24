@@ -1,10 +1,31 @@
+import { useState } from "react";
 import "./../Index.css";
 import { Link } from "react-router-dom";
 
 export default function Listing() {
+  const SUBJECTS = [
+    "Français",
+    "Arabe",
+    "Amazighe",
+    "Anglais",
+    "Espagnol",
+    "Mathématiques",
+    "Physique-Chimie",
+    "Sciences de la Vie et de la Terre (SVT)",
+    "Histoire-Géographie",
+    "Éducation islamique",
+    "Philosophie",
+    "Informatique",
+    "Technologie",
+    "Éducation physique et sportive",
+    "Éducation artistique",
+  ];
+
+  const [subject_hover, setSubjectHover] = useState(false)
+
   return (
     <>
-      <div className='header'>
+      <div className='header' onClick={() => setSubjectHover(false)}>
         <a href=''>
           <img src='main.html' alt='' />
         </a>
@@ -34,23 +55,44 @@ export default function Listing() {
           </Link>
           <Link to={"/sign-in"} className='nav-link'>
             <Link to={"/sign-in"} className='nav-link'>
-            <button className='signin'>Sign in</button>
-          </Link>
+              <button className='signin'>Sign in</button>
+            </Link>
           </Link>
           <button className='profile'></button>
         </div>
       </div>
       <div className='listing-container'>
-        <div></div>
-        <div className='filters'>
-          <div className='dropdown'>
-            <p>Subject ↓</p>
+        <div className="listing-search">
+          <h1>Find a tutor</h1>
+          <div className='search-bar'>
+            
+            <input type='text' placeholder='Search for a specific subject...' />
+            <button className="search-button">Search</button>
+            <button className="filter-cleaner">Clear Filters</button>
           </div>
         </div>
-        <div className='search-bar'>
-          <input type='text' placeholder='Search for a specific subject...' />
-          <button>Search</button>
-        </div>
+        <div className="listing-content">
+            <div className='filters'>
+              <div className='dropdown' onClick={() => setSubjectHover(subject_hover == true ? false : true)}>
+                <p>Subject ↓</p>
+
+                <ul className={`dropdown-menu ${subject_hover ? "open" : ""}`}>
+                  {SUBJECTS.map((subject) => (
+                    <li key={subject}>
+                      <button
+                        type="button"
+                        className={`dropdown-option ${subject === "Mathematics" ? "selected" : ""}`}
+                        onClick={() => setSubject(subject)}
+                      >
+                        {subject}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+
       </div>
       <div className='footer'>
         <div className='footer-top'>

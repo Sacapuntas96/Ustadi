@@ -812,17 +812,22 @@ form p {
 }
 
 .listing-container{
-  border: 2px solid var(--orange-500);
+  border: 1px solid var(--grey-400);
   border-radius: 10px;
   background-color: white;
-  margin: 100px;
+  margin-left: 300px;
+  margin-right: 300px;
+  margin-top: 120px;
+  margin-bottom: 120px;
+  display: flex;
+  flex-direction: column;
   padding: 20px;
   box-sizing: border-box;
   display: flex;
 }
 
 .filters{
-  width: 400px;
+  width: 25%;
   height: fit-content;
   padding: 20px;
   box-sizing: border-box;
@@ -834,7 +839,7 @@ form p {
 }
 
 .search-bar input[type="text"]{
-  width: 700px;
+  width: 100%;
   padding: 15px;
   font-size: 15px;
   border-radius: 5px;
@@ -844,7 +849,7 @@ form p {
   border-right: 0;
 }
 
-.search-bar button{
+.search-button{
   padding: 10px 12px;
   font-size: 15px;
   border-radius: 5px;
@@ -856,27 +861,86 @@ form p {
   font-weight: 600;
 }   
 
-.search-bar button:hover{
+.search-button:hover{
   cursor: pointer;
   background-color: var(--orange-600);
 }
 
-.dropdown{
+.dropdown {
+  position: relative;
   border: 1px solid var(--grey-300);
   width: fit-content;
-  padding: 6px 8px;
+  padding: 12px 14px;
   box-sizing: border-box;
-  border-radius: 0px;
-  background-color: var(--grey-100);
-  height: fit-content;
+  font-size: 12px;
+  border-radius: 999px;
+  background-color: transparent;
+  cursor: pointer;
 }
 
-.dropdown p{
+.dropdown p {
   margin: 0;
 }
 
-.dropdown:hover{
+.dropdown:hover {
+  background-color: color-mix(in srgb, var(--grey-300) 18%, transparent);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 50;
+
+  min-width: 180px;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+
+  background: var(--surface, #fff);
+  border: 1px solid var(--grey-300);
+  border-radius: 16px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px) scale(0.98);
+  transform-origin: top left;
+
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease,
+    visibility 0.18s ease;
+}
+
+.dropdown-menu.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.dropdown-option {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+
+  padding: 10px 12px;
+  font-size: 12px;
+  border-radius: 10px;
   cursor: pointer;
+
+  transition: background-color 0.15s ease;
+}
+
+.dropdown-option:hover {
+  background-color: color-mix(in srgb, var(--grey-300) 22%, transparent);
+}
+
+.dropdown-option.selected {
+  font-weight: 600;
+  background-color: color-mix(in srgb, var(--grey-300) 30%, transparent);
 }
 
 form div{
@@ -898,4 +962,29 @@ form div input{
 
 .get-help-content{
   padding: 80px 100px;
+}
+
+.listing-content{
+  display: flex;
+}
+
+.listing-search{
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-cleaner{
+  background-color: var(--grey-200);
+  border: 1px solid var(--grey-300);
+  border-radius: 3px;
+}
+
+.filter-cleaner:hover{
+  cursor: pointer;
+  background-color: var(--grey-300);
+}
+
+.filter-cleaner:active{
+  background-color: var(--grey-400);
 }
