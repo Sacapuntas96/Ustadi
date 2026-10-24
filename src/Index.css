@@ -882,6 +882,7 @@ form p {
 form div{
   display: flex;
   gap: 20px;
+  width: 100%;
 }
 
 form div input{
