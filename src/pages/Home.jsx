@@ -10,7 +10,7 @@ export default function Home() {
         </a>
         <div className='button-container'>
           <Link to={"/"} className='nav-link'>
-            <button>
+            <button className="is-active">
               <p>Home</p>
             </button>
           </Link>
@@ -42,8 +42,8 @@ export default function Home() {
       </div>
       <div className='hero'>
         <h1>
-          Find the <span>perfect</span> personal tutor <br />
-          With the <span>perfect</span> price
+          Find the <span>perfect</span>&nbsp; tutor <br />
+          For the <span>perfect</span>&nbsp; price
         </h1>
         <p>Trouve la matière qui te convient</p>
         <div className='catalog'>
