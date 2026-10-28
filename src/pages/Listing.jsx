@@ -21,7 +21,39 @@ export default function Listing() {
     "Éducation artistique",
   ];
 
+  const GRADES = [
+    "CP",
+    "CE1",
+    "CE2",
+    "CM1",
+    "CM2",
+    "6ème",
+    "5ème",
+    "4ème",
+    "3ème",
+    "Seconde",
+    "Première",
+    "Terminale",
+    "Bac+1",
+    "Bac+2",
+    "Bac+3"
+  ]
+
+  const TYPES = [
+    "Distanciel",
+    "Présentiel",
+    "Hybride"
+  ]
+
   const [subject_hover, setSubjectHover] = useState(false)
+  const [grade_hover, setGradeHover] = useState(false)
+  const [type_hover, setTypeHover] = useState(false)
+
+  const disable_all = () => {
+    setSubjectHover(false)
+    setGradeHover(false)
+    setTypeHover(false)
+  }
 
   return (
     <>
@@ -53,10 +85,8 @@ export default function Listing() {
           <Link to='/login' className='nav-link'>
             <button className='login'>Login</button>
           </Link>
-          <Link to={"/sign-in"} className='nav-link'>
-            <Link to={"/sign-in"} className='nav-link'>
+          <Link to={"/sign-in"} className='nav-link'>            
               <button className='signin'>Sign in</button>
-            </Link>
           </Link>
           <button className='profile'></button>
         </div>
@@ -73,18 +103,52 @@ export default function Listing() {
         </div>
         <div className="listing-content">
             <div className='filters'>
-              <div className='dropdown' onClick={() => setSubjectHover(subject_hover == true ? false : true)}>
-                <p>Subject ↓</p>
+              <div className='dropdown' onClick={() => {disable_all()
+              setSubjectHover(subject_hover == true ? false : true)
+                
+              }}>
+                <p><div>Subject</div> ↓</p>
 
-                <ul className={`dropdown-menu ${subject_hover ? "open" : ""}`}>
+                <ul className={`dropdown-menu ${subject_hover ? "open" : ""}`} onMouseLeave={() => setSubjectHover(false)}>
                   {SUBJECTS.map((subject) => (
                     <li key={subject}>
                       <button
                         type="button"
-                        className={`dropdown-option ${subject === "Mathematics" ? "selected" : ""}`}
-                        onClick={() => setSubject(subject)}
                       >
                         {subject}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className='dropdown' onClick={() => {disable_all()
+              setGradeHover(grade_hover == true ? false : true)}}>
+                <p><div>Grade</div> ↓</p>
+
+                <ul className={`dropdown-menu ${grade_hover ? "open" : ""}`} onMouseLeave={() => {disable_all()
+                setGradeHover(false)}}>
+                  {GRADES.map((grade) => (
+                    <li key={grade}>
+                      <button
+                        type="button"
+                      >
+                        {grade}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className='dropdown' onClick={() => {disable_all()
+              setTypeHover(type_hover == true ? false : true)}}>
+                <p><div>Type</div> ↓</p>
+
+                <ul className={`dropdown-menu ${type_hover ? "open" : ""}`} onMouseLeave={() => setTypeHover(false)}>
+                  {TYPES.map((type) => (
+                    <li key={type}>
+                      <button
+                        type="button"
+                      >
+                        {type}
                       </button>
                     </li>
                   ))}

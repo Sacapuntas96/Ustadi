@@ -830,6 +830,9 @@ form p {
   width: 25%;
   height: fit-content;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   box-sizing: border-box;
 }
 
@@ -870,6 +873,7 @@ form p {
   position: relative;
   border: 1px solid var(--grey-300);
   width: fit-content;
+  display: flex;
   padding: 12px 14px;
   box-sizing: border-box;
   font-size: 12px;
@@ -878,11 +882,20 @@ form p {
   cursor: pointer;
 }
 
+.dropdown p{
+  display: flex;
+}
+
+.dropdown p div{
+  width: 70px;
+  text-align: center;
+}
+
 .dropdown p {
   margin: 0;
 }
 
-.dropdown:hover {
+.dropdown:hover:not(:has(:hover)) {
   background-color: color-mix(in srgb, var(--grey-300) 18%, transparent);
 }
 
@@ -943,6 +956,24 @@ form p {
   background-color: color-mix(in srgb, var(--grey-300) 30%, transparent);
 }
 
+.dropdown button{
+  width: 100%;
+  background-color: transparent;
+  border: 0;
+  height: 30px;
+  border-radius: 999px;
+  transition: background-color 0.1s ease;
+}
+
+.dropdown button:hover{
+  cursor: pointer;
+  background-color: var(--grey-200);
+}
+
+.dropdown button:active{
+  background-color: var(--grey-300);
+}
+
 form div{
   display: flex;
   gap: 20px;
@@ -975,7 +1006,8 @@ form div input{
 }
 
 .filter-cleaner{
-  background-color: var(--grey-200);
+  margin-left: 10px;
+  background-color: var(--grey-100);
   border: 1px solid var(--grey-300);
   border-radius: 3px;
 }
