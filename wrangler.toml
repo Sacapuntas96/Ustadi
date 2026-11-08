@@ -2,3 +2,7 @@ name="ustadi"
 main="database/index.js"
 compatibility_date="2026-11-8"
 
+[[d1_databases]]
+binding="BD"
+database_name="ustadi"
+database_id="c241fdae-3f70-4ee9-9087-4585ad2e6fbc"

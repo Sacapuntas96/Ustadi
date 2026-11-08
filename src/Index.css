@@ -1290,6 +1290,23 @@ a.nav-link { text-decoration: none; }
   background-color: var(--grey-300);
 }
 
+.contact-content{
+  width: 100%;
+  height: fit-content;
+  padding: 50px;
+  box-sizing: border-box;
+}
+
+.contact-container{
+  width: 100%;
+  height: 100%;
+  border: 1px solid var(--grey-300);
+  border-radius: 6px;
+  background-color: var(--grey-100);
+  padding: 8px 20px;
+  box-sizing: border-box;
+}
+
 @media (max-width: 900px) {
   .hero { padding: 72px 24px 56px; }
   .hero::after { top: 32px; left: 24px; }

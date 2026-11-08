@@ -1,5 +1,5 @@
-import { useState } from "react";
-import "./../Index.css";
+import { useEffectEvent, useEffect, useState } from "react";
+import "../Index.css";
 import { Link } from "react-router-dom";
 
 export default function Listing() {
@@ -21,6 +21,7 @@ export default function Listing() {
 
   const TYPES = ["Distanciel", "Présentiel", "Hybride"];
 
+  /*
   const SAMPLE_POSTINGS = [
     { name: "Sara B.", price: "40 Dh/h", subject: "Anglais", location: "Casablanca", type: "Distanciel" },
     { name: "Youssef A.", price: "60 Dh/h", subject: "Mathématiques", location: "Rabat", type: "Présentiel" },
@@ -28,13 +29,27 @@ export default function Listing() {
     { name: "Omar T.", price: "45 Dh/h", subject: "Physique-Chimie", location: "Casablanca", type: "Distanciel" },
     { name: "Salma R.", price: "55 Dh/h", subject: "Philosophie", location: "Fès", type: "Présentiel" },
     { name: "Hicham M.", price: "35 Dh/h", subject: "Arabe", location: "Tanger", type: "Distanciel" },
-  ];
+  ];*/
+
+  const [listings, setListings] = useState([]);
+
+  useEffect(() => {
+    fetch(`api/listings?subjet=${selectedSubject}&location=${selectedGrade}&grade=${selectedGrade}&type=${selectedType}&min_price=${min_price}&max_price=${max_price}`)
+      .then(res => res.json())
+      .then(data => setListings(data));
+    
+  })
+
+  console.log(listings);
+
+  
 
   const [subjectHover, setSubjectHover] = useState(false);
   const [gradeHover, setGradeHover] = useState(false);
   const [typeHover, setTypeHover] = useState(false);
 
   const [selectedSubject, setSelectedSubject] = useState(null);
+  const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedGrade, setSelectedGrade] = useState(null);
   const [selectedType, setSelectedType] = useState(null);
 
@@ -60,7 +75,7 @@ export default function Listing() {
   const hasFilters =
     selectedSubject !== null || selectedGrade !== null || selectedType !== null || query !== "";
 
-  const filtered = SAMPLE_POSTINGS.filter((p) => {
+  const filtered = listings.filter((p) => {
     if (selectedSubject && p.subject !== selectedSubject) return false;
     if (selectedType && p.type !== selectedType) return false;
     if (query && !`${p.subject} ${p.name} ${p.location}`.toLowerCase().includes(query.toLowerCase()))
@@ -243,17 +258,12 @@ export default function Listing() {
                 No tutors match your filters. Try clearing them.
               </p>
             ) : (
-              filtered.map((p) => (
-                <div className="posting" key={p.name}>
-                  <h4>{p.name}</h4>
-                  <div>
-                    <h5><span>Price</span><span>{p.price}</span></h5>
-                    <h5><span>Subject</span><span>{p.subject}</span></h5>
-                    <h5><span>Location</span><span>{p.location}</span></h5>
-                    <h5><span>Type</span><span>{p.type}</span></h5>
-                  </div>
-                </div>
-              ))
+              filtered.map((p) => 
+                <ListingCard
+                  element={p}
+                  key={p.name}
+                />
+              )
             )}
           </div>
         </div>
@@ -297,4 +307,19 @@ export default function Listing() {
       </div>
     </>
   );
+}
+
+function ListingCard({element}){
+
+  return (
+    <div className="posting" key={element.name}>
+      <h4>{element.name}</h4>
+      <div>
+        <h5><span>Price</span><span>{element.price}</span></h5>
+        <h5><span>Subject</span><span>{element.subject}</span></h5>
+        <h5><span>Location</span><span>{element.location}</span></h5>
+        <h5><span>Type</span><span>{element.type}</span></h5>
+      </div>
+    </div>
+  )
 }

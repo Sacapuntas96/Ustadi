@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import "./../Index.css";
+import "../Index.css";
 import { useState } from "react";
 
 export default function Signin() {

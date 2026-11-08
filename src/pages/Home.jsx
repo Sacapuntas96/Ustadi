@@ -1,4 +1,4 @@
-import "./../Index.css";
+import "../Index.css";
 import { Link } from "react-router-dom";
 
 export default function Home() {
@@ -19,9 +19,11 @@ export default function Home() {
               <p>Subjects</p>
             </button>
           </Link>
-          <button>
-            <p>Contact</p>
-          </button>
+          <Link to={"/contact"} className="nav-link">
+            <button>
+              <p>Contact</p>
+            </button>
+          </Link>
           <Link to={"/get-help"} className='nav-link'>
             <button>
               <p>Help</p>
