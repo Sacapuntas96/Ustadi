@@ -669,6 +669,7 @@ a.nav-link { text-decoration: none; }
 .listing-content {
   display: flex;
   align-items: flex-start;
+  min-height: 600px;
 }
 
 .search-bar {

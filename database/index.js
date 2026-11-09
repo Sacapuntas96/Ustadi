@@ -9,14 +9,30 @@ export default{
             const min_price = url.searchParams.get("min_price");
             const max_price = url.searchParams.get("max_price");
 
-            let command = "SELECT * from listings";
-            const parameters = ["subject", "location", "grade", "type", "min_price", "max_price"];
             
+            const parameters = ["subject", "location", "grade", "type"];
 
-            let values = [];
+            const variables = {"subject" : subject, "location" : location, "grade" : grade, "type" : type};
+            let conditions = []
 
+            let command = "SELECT * FROM listings";
+            if (Object.values(variables).some(element => element)){
+                command = command + " WHERE ";
+            }
+
+
+            for (const [key, value] of Object.entries(variables)){
+                if (value) {
+                    conditions.push(` ${key} = ? `);
+                }
+            }
+            command = command + conditions.join("AND");
+
+
+            console.log(command);
             const { results } = await env.DB
-                .prepare("SELECT * from listings")
+                .prepare(command)
+                .bind(...Object.values(variables).filter(value => value))
                 .all();
 
             return Response.json(results);

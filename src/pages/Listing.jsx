@@ -1,4 +1,4 @@
-import { useEffectEvent, useEffect, useState } from "react";
+import { useEffectEvent, useEffect, useState, useMemo } from "react";
 import "../Index.css";
 import { Link } from "react-router-dom";
 
@@ -19,31 +19,40 @@ export default function Listing() {
     "Bac+1", "Bac+2", "Bac+3",
   ];
 
-  const TYPES = ["Distanciel", "Présentiel", "Hybride"];
+  const CITIES = [
+  "Casablanca",
+  "Rabat",
+  "Marrakech",
+  "Fès",
+  "Tanger",
+  "Agadir",
+  "Meknès",
+  "Oujda",
+  "Kénitra",
+  "Tétouan",
+  "Salé",
+  "Témara",
+  "Mohammedia",
+  "El Jadida",
+  "Béni Mellal",
+  "Nador",
+  "Safi",
+  "Essaouira",
+  "Laâyoune",
+  "Dakhla",
+];
 
-  /*
-  const SAMPLE_POSTINGS = [
-    { name: "Sara B.", price: "40 Dh/h", subject: "Anglais", location: "Casablanca", type: "Distanciel" },
-    { name: "Youssef A.", price: "60 Dh/h", subject: "Mathématiques", location: "Rabat", type: "Présentiel" },
-    { name: "Imane K.", price: "50 Dh/h", subject: "Français", location: "Marrakech", type: "Hybride" },
-    { name: "Omar T.", price: "45 Dh/h", subject: "Physique-Chimie", location: "Casablanca", type: "Distanciel" },
-    { name: "Salma R.", price: "55 Dh/h", subject: "Philosophie", location: "Fès", type: "Présentiel" },
-    { name: "Hicham M.", price: "35 Dh/h", subject: "Arabe", location: "Tanger", type: "Distanciel" },
-  ];*/
+  const TYPES = ["Distanciel", "Présentiel", "Hybride"];
 
   const [listings, setListings] = useState([]);
 
-  useEffect(() => {
-    fetch(`api/listings?subjet=${selectedSubject}&location=${selectedGrade}&grade=${selectedGrade}&type=${selectedType}&min_price=${min_price}&max_price=${max_price}`)
-      .then(res => res.json())
-      .then(data => setListings(data));
-    
-  })
+
   
 
   const [subjectHover, setSubjectHover] = useState(false);
   const [gradeHover, setGradeHover] = useState(false);
   const [typeHover, setTypeHover] = useState(false);
+  const [locationHover, setLocationHover] = useState(false);
 
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [selectedLocation, setSelectedLocation] = useState(null);
@@ -59,12 +68,14 @@ export default function Listing() {
     setSubjectHover(false);
     setGradeHover(false);
     setTypeHover(false);
+    setLocationHover(false);
   };
 
   const clearFilters = () => {
     setSelectedSubject(null);
     setSelectedGrade(null);
     setSelectedType(null);
+    setSelectedLocation(null)
     setQuery("");
     closeAll();
   };
@@ -72,6 +83,24 @@ export default function Listing() {
   const hasFilters =
     selectedSubject !== null || selectedGrade !== null || selectedType !== null || query !== "";
 
+    useEffect(() => {
+      const params = new URLSearchParams();
+  if (selectedSubject) params.set("subject", selectedSubject);
+  if (selectedLocation) params.set("location", selectedLocation);
+  if (selectedGrade) params.set("grade", selectedGrade);
+  if (selectedType) params.set("type", selectedType);
+  if (min_price) params.set("min_price", min_price);
+  if (max_price) params.set("max_price", max_price);
+    fetch(`/api/listings?${params}`)
+      .then(res => res.json())
+      .then(data => setListings(data));    
+          
+
+  }, [selectedSubject, selectedLocation, selectedGrade, selectedType, min_price, max_price]);
+
+  useMemo(() => {console.log("Variables : ", selectedSubject, selectedLocation, selectedGrade, selectedType, min_price, max_price );
+          console.log("Return : ", listings);
+  }, [selectedSubject, selectedLocation, selectedGrade, selectedType, min_price, max_price]);
   return (
     <>
       <div className="header">
@@ -131,7 +160,7 @@ export default function Listing() {
               }}
             >
               <p>
-                <div>{selectedSubject ?? "Subject"}</div>
+                {selectedSubject ?? "Subject"}
               </p>
               <ul
                 className={`dropdown-menu ${subjectHover ? "open" : ""}`}
@@ -145,6 +174,9 @@ export default function Listing() {
                       onClick={() => {
                         setSelectedSubject(subject);
                         setSubjectHover(false);
+                        if(selectedSubject == subject){
+                          setSelectedSubject(null)
+                        }
                       }}
                     >
                       {subject}
@@ -163,7 +195,7 @@ export default function Listing() {
               }}
             >
               <p>
-                <div>{selectedGrade ?? "Grade"}</div>
+                {selectedGrade ?? "Grade"}
               </p>
               <ul
                 className={`dropdown-menu ${gradeHover ? "open" : ""}`}
@@ -195,7 +227,7 @@ export default function Listing() {
               }}
             >
               <p>
-                <div>{selectedType ?? "Type"}</div>
+                {selectedType ?? "Type"}
               </p>
               <ul
                 className={`dropdown-menu ${typeHover ? "open" : ""}`}
@@ -212,6 +244,40 @@ export default function Listing() {
                       }}
                     >
                       {type}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div
+              className={`dropdown ${selectedLocation ? "active" : ""}`}
+              onClick={() => {
+                const next = ! locationHover;
+                closeAll();
+                setLocationHover(next);
+              }}
+            >
+              <p>
+                {selectedLocation ?? "Location"}
+              </p>
+              <ul
+                className={`dropdown-menu ${locationHover ? "open" : ""}`}
+                onMouseLeave={() => setLocationHover(false)}
+              >
+                {CITIES.map((location) => (
+                  <li key={location}>
+                    <button
+                      type="button"
+                      className={setSelectedLocation === location ? "selected" : ""}
+                      onClick={() => {
+                        setSelectedLocation(location);
+                        setLocationHover(false);
+                        if(selectedLocation == location){
+                          setSelectedLocation(null)
+                        }
+                      }}
+                    >
+                      {location}
                     </button>
                   </li>
                 ))}
@@ -250,7 +316,7 @@ export default function Listing() {
               listings.map((p) => 
                 <ListingCard
                   element={p}
-                  key={p.name}
+                  key={p.title}
                 />
               )
             )}
