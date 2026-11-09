@@ -6,8 +6,9 @@ export default{
             const location = url.searchParams.get("location");
             const grade = url.searchParams.get("grade");
             const type = url.searchParams.get("type");
-            const min_price = url.searchParams.get("min_price");
-            const max_price = url.searchParams.get("max_price");
+            const min_price = url.searchParams.get("min_price") || 0;
+            const max_price = url.searchParams.get("max_price") || 0;
+            const query = url.searchParams.get("query");
 
             
             const parameters = ["subject", "location", "grade", "type"];
@@ -16,7 +17,7 @@ export default{
             let conditions = []
 
             let command = "SELECT * FROM listings";
-            if (Object.values(variables).some(element => element)){
+            if (Object.values(variables).some(element => element) || query || min_price || max_price){
                 command = command + " WHERE ";
             }
 
@@ -26,10 +27,24 @@ export default{
                     conditions.push(` ${key} = ? `);
                 }
             }
+
+            if (query){
+                conditions.push(` title COLLATE Latin1_General_CI_AI LIKE ? `)
+                variables["query"] = "%" + query + "%"
+            }
+            
+            if (min_price != 0){
+                conditions.push(` hourly_price >= ? `);
+                variables["min_price"] = min_price;
+            }
+            if (max_price != 0){
+                conditions.push(` hourly_price <= ? `);
+                variables["max_price"] = max_price;
+            }
+
             command = command + conditions.join("AND");
 
 
-            console.log(command);
             const { results } = await env.DB
                 .prepare(command)
                 .bind(...Object.values(variables).filter(value => value))

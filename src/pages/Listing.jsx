@@ -59,6 +59,7 @@ export default function Listing() {
   const [selectedGrade, setSelectedGrade] = useState(null);
   const [selectedType, setSelectedType] = useState(null);
 
+  const [tempQuery, setTempQuery] = useState("");
   const [query, setQuery] = useState("");
 
   const [max_price, setMaxPrice] = useState(0)
@@ -76,12 +77,13 @@ export default function Listing() {
     setSelectedGrade(null);
     setSelectedType(null);
     setSelectedLocation(null)
-    setQuery("");
+    setMinPrice(0);
+    setMaxPrice(0);
     closeAll();
   };
 
   const hasFilters =
-    selectedSubject !== null || selectedGrade !== null || selectedType !== null || query !== "";
+    selectedSubject !== null || selectedGrade !== null || selectedType !== null || selectedLocation != null || min_price != 0 || max_price != 0;
 
     useEffect(() => {
       const params = new URLSearchParams();
@@ -91,14 +93,15 @@ export default function Listing() {
   if (selectedType) params.set("type", selectedType);
   if (min_price) params.set("min_price", min_price);
   if (max_price) params.set("max_price", max_price);
+  if (query) params.set("query", query);
     fetch(`/api/listings?${params}`)
       .then(res => res.json())
       .then(data => setListings(data));    
           
 
-  }, [selectedSubject, selectedLocation, selectedGrade, selectedType, min_price, max_price]);
+  }, [selectedSubject, selectedLocation, selectedGrade, selectedType, min_price, max_price, query]);
 
-  useMemo(() => {console.log("Variables : ", selectedSubject, selectedLocation, selectedGrade, selectedType, min_price, max_price );
+  useMemo(() => {   console.log("Variables:", { selectedSubject, selectedLocation, selectedGrade, selectedType, min_price, max_price });
           console.log("Return : ", listings);
   }, [selectedSubject, selectedLocation, selectedGrade, selectedType, min_price, max_price]);
   return (
@@ -136,16 +139,17 @@ export default function Listing() {
         <div className="listing-search">
           <h1>Find a tutor</h1>
           <p>
-            Browse tutors by subject, grade and format. Contact them directly.
+            Parcourez les profils des tuteurs par matière, niveau scolaire et format. Contactez-les directement.
           </p>
           <div className="search-bar">
             <input
               type="text"
-              placeholder="Search by subject, name or city…"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Rechercher par sujet, nom ou ville…"
+              value={tempQuery}
+              onChange={(e) => setTempQuery(e.target.value)}
+              onKeyDown={event => {if (event.key == "Enter") setQuery(tempQuery)}}
             />
-            <button className="search-button">Search</button>
+            <button className="search-button" onClick={() => setQuery(tempQuery)}>Recherche</button>
           </div>
         </div>
 
@@ -160,7 +164,7 @@ export default function Listing() {
               }}
             >
               <p>
-                {selectedSubject ?? "Subject"}
+                {selectedSubject ?? "Matière"}
               </p>
               <ul
                 className={`dropdown-menu ${subjectHover ? "open" : ""}`}
@@ -195,7 +199,7 @@ export default function Listing() {
               }}
             >
               <p>
-                {selectedGrade ?? "Grade"}
+                {selectedGrade ?? "Classe"}
               </p>
               <ul
                 className={`dropdown-menu ${gradeHover ? "open" : ""}`}
@@ -209,6 +213,9 @@ export default function Listing() {
                       onClick={() => {
                         setSelectedGrade(grade);
                         setGradeHover(false);
+                        if(selectedGrade == grade){
+                          setSelectedGrade(null)
+                        }
                       }}
                     >
                       {grade}
@@ -241,6 +248,9 @@ export default function Listing() {
                       onClick={() => {
                         setSelectedType(type);
                         setTypeHover(false);
+                        if(selectedType == type){
+                          setSelectedType(null)
+                        }
                       }}
                     >
                       {type}
@@ -258,7 +268,7 @@ export default function Listing() {
               }}
             >
               <p>
-                {selectedLocation ?? "Location"}
+                {selectedLocation ?? "Localisation"}
               </p>
               <ul
                 className={`dropdown-menu ${locationHover ? "open" : ""}`}
@@ -286,13 +296,13 @@ export default function Listing() {
             <div className="price-filter">
                 <label htmlFor="">Min</label>
                 <div className="price-input">
-                  <input type="number" value={min_price} onChange={(event) => setMinPrice(event.target.value)}/>
-                  <button>Reset</button>
+                  <input type="number" placeholder="0" min={0} max={20000} value={min_price} onChange={(event) => setMinPrice(event.target.value)}/>
+                  <button onClick={() => setMinPrice(0)}>Réinitialiser</button>
                 </div>
                 <label htmlFor="">Max</label>
                 <div className="price-input">
-                  <input type="number" value={max_price} onChange={(event) => setMaxPrice(event.target.value)}/>
-                  <button>Reset</button>
+                  <input type="number"placeholder="0" min={0} max={20000} value={max_price} onChange={(event) => setMaxPrice(event.target.value)}/>
+                  <button onClick={() => setMaxPrice(0)}>Réinitialiser</button>
                 </div>
             </div>
 
@@ -303,7 +313,7 @@ export default function Listing() {
               disabled={!hasFilters}
               style={{ opacity: hasFilters ? 1 : 0.4 }}
             >
-              Clear Filters
+              Retirer les filtres
             </button>
           </div>
 
@@ -370,9 +380,9 @@ function ListingCard({element}){
     <div className="posting" key={element.listing_id}>
       <h4>{element.title}</h4>
       <div>
-        <h5><span>Price</span><span>{element.hourly_price}</span></h5>
-        <h5><span>Subject</span><span>{element.subject}</span></h5>
-        <h5><span>Location</span><span>{element.location}</span></h5>
+        <h5><span>Prix / heure</span><span>{element.hourly_price} DH</span></h5>
+        <h5><span>Sujet</span><span>{element.subject}</span></h5>
+        <h5><span>Localisation</span><span>{element.location}</span></h5>
         <h5><span>Type</span><span>{element.type}</span></h5>
       </div>
     </div>
