@@ -9,12 +9,19 @@ export default{
             const min_price = url.searchParams.get("min_price");
             const max_price = url.searchParams.get("max_price");
 
+            let command = "SELECT * from listings";
+            const parameters = ["subject", "location", "grade", "type", "min_price", "max_price"];
+            
+
+            let values = [];
+
             const { results } = await env.DB
-                .prepare("SELECT * from listings WHERE subject = ? AND location = ? AND grade = ? AND type = ? AND hourly_price < ? AND hourly_price > ?")
-                .bind(subject, location, grade, type, max_price, min_price)
+                .prepare("SELECT * from listings")
                 .all();
 
             return Response.json(results);
        }
+
+       return new Response("not found", {status : 404});
     }
 }

@@ -1,8 +1,12 @@
 name="ustadi"
 main="database/index.js"
-compatibility_date="2026-11-8"
+compatibility_date="2026-11-07"
+
+[assets]
+not_found_handling = "single-page-application"
+run_worker_first = ["/api/*"]
 
 [[d1_databases]]
-binding="BD"
+binding="DB"
 database_name="ustadi"
 database_id="c241fdae-3f70-4ee9-9087-4585ad2e6fbc"

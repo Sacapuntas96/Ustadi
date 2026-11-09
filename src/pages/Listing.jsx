@@ -39,9 +39,6 @@ export default function Listing() {
       .then(data => setListings(data));
     
   })
-
-  console.log(listings);
-
   
 
   const [subjectHover, setSubjectHover] = useState(false);
@@ -74,14 +71,6 @@ export default function Listing() {
 
   const hasFilters =
     selectedSubject !== null || selectedGrade !== null || selectedType !== null || query !== "";
-
-  const filtered = listings.filter((p) => {
-    if (selectedSubject && p.subject !== selectedSubject) return false;
-    if (selectedType && p.type !== selectedType) return false;
-    if (query && !`${p.subject} ${p.name} ${p.location}`.toLowerCase().includes(query.toLowerCase()))
-      return false;
-    return true;
-  });
 
   return (
     <>
@@ -253,12 +242,12 @@ export default function Listing() {
           </div>
 
           <div className="listing">
-            {filtered.length === 0 ? (
+            {listings.length === 0 ? (
               <p style={{ gridColumn: "1 / -1", color: "var(--grey-500)", fontSize: 14 }}>
                 No tutors match your filters. Try clearing them.
               </p>
             ) : (
-              filtered.map((p) => 
+              listings.map((p) => 
                 <ListingCard
                   element={p}
                   key={p.name}
@@ -312,10 +301,10 @@ export default function Listing() {
 function ListingCard({element}){
 
   return (
-    <div className="posting" key={element.name}>
-      <h4>{element.name}</h4>
+    <div className="posting" key={element.listing_id}>
+      <h4>{element.title}</h4>
       <div>
-        <h5><span>Price</span><span>{element.price}</span></h5>
+        <h5><span>Price</span><span>{element.hourly_price}</span></h5>
         <h5><span>Subject</span><span>{element.subject}</span></h5>
         <h5><span>Location</span><span>{element.location}</span></h5>
         <h5><span>Type</span><span>{element.type}</span></h5>
