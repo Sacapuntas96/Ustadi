@@ -15,18 +15,21 @@ export default function Login() {
         <div className='filler'>
           <form>
             <div className='field'>
-              <label>Username or e-mail</label>
+              <label>Nom d'utilisateur ou adresse e-mail</label>
               <input type='text' />
             </div>
             <div className='field'>
-              <label>Password</label>
+              <label>Mot de passe</label>
               <input type='password' />
             </div>
-
+            <div style={{display:"flex", width:100 + "%", justifyContent:"space-between"}}>
             <Link to='/forgot-password' className='nav-link'>
-              <p>Forogt password ?</p>
+              <p>Mot de passe oublié ?</p>
             </Link>
-            <button>Login</button>
+            <Link to='/sign-in ' className='nav-link'>
+              <p>Pas de compte ?</p>
+            </Link></div>
+            <button>Se connecter</button>
           </form>
         </div>
       </div>

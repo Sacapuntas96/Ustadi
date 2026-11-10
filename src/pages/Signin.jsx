@@ -29,32 +29,32 @@ export default function Signin() {
           <form>
             <div>
               <div className='field'>
-                <label>Last Name</label>
+                <label>Nom</label>
                 <input type='text' placeholder='Dupont' />
                 {last_name_error && (
-                  <p className='error'>Last name is invalid</p>
+                  <p className='error'>Ce nom est invalide</p>
                 )}
               </div>
               <div className='field'>
-                <label>First Name</label>
+                <label>Prénom</label>
                 <input type='text' placeholder='Marie' />
                 {first_name_error && (
-                  <p className='error'>First name is invalid</p>
+                  <p className='error'>Ce prénom est invalide</p>
                 )}
               </div>
             </div>
             <div className='field'>
-              <label>Phone Number (optional)</label>
+              <label>Numéro de téléphone (optionel)</label>
               <input type='text' placeholder='06 12 34 56 78' />
             </div>
             <div className='field'>
               <label>E-mail</label>
-              <input type='text' placeholder='name@example.com' />
+              <input type='text' placeholder='adresse@exemple.com' />
             </div>
             <div>
               <div className='field'>
                 {" "}
-                <label>Password</label>
+                <label>Mot de passe</label>
                 <input
                   type='password'
                   value={password}
@@ -63,7 +63,7 @@ export default function Signin() {
               </div>
 
               <div className='field'>
-                <label>Confirm Password</label>
+                <label>Confirmer mot de passe</label>
                 <input
                   type='password'
                   value={passwordconfirm}
@@ -71,15 +71,18 @@ export default function Signin() {
                 />
               </div>
             </div>
+        <Link to='/login' className='nav-link'>
+              <p>Tu possède un compte ?</p>
+            </Link>
 
             {password_error && (
-              <p className='error'>Passwords are not the same</p>
+              <p className='error'>Les mots de passe diffèrent</p>
             )}
             <button
               type='button'
               onClick={() => setPasswordError(password != passwordconfirm)}
             >
-              Login
+              Créér un compte
             </button>
           </form>
         </div>

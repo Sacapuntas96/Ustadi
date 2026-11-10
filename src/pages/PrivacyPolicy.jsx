@@ -172,42 +172,42 @@ export default function PrivacyPolicy() {
         <h3>14. Contact</h3>
         <p>For any question about this policy: CONTACT EMAIL</p>
       </div>
-      <div className='footer'>
-        <div className='footer-top'>
-          <div className='first-container'>
+      <div className="footer">
+        <div className="footer-top">
+          <div className="first-container">
             <h1>
               Ustadi<span>.</span>
             </h1>
-            <p className='footer-tagline'>
-              Find the right tutor for every subject, at the right price.
+            <p className="footer-tagline">
+              Trouve le bon professeur pour chaque matière, au bon prix.
             </p>
-            <label htmlFor='review'>Want to leave us a review ?</label>
-            <div className='submit'>
-              <input id='review' type='text' placeholder='I think that...' />
-              <button>Submit</button>
+            <label htmlFor="review">Envie de nous laisser un avis ?</label>
+            <div className="submit">
+              <input id="review" type="text" placeholder="Je pense que..." />
+              <button>Envoyer</button>
             </div>
           </div>
 
-          <div className='footer-links'>
-            <div className='footer-column'>
-              <h2>Support</h2>
-              <Link to={"/get-help"}>
-                <button>Get help</button>
+          <div className="footer-links">
+            <div className="footer-column">
+              <h2>Assistance</h2>
+              <Link to={"/get-help"} className="nav-link">
+                <button>Obtenir de l'aide</button>
               </Link>
-              <button>How it works</button>
+              <button>Comment ça marche</button>
             </div>
-            <div className='footer-column'>
-              <h2>Legal</h2>
-              <Link to='/privacy-policy'>
-                <button>Privacy policy</button>
+            <div className="footer-column">
+              <h2>Mentions légales</h2>
+              <Link to="/privacy-policy" className="nav-link">
+                <button>Politique de confidentialité</button>
               </Link>
             </div>
           </div>
         </div>
 
-        <div className='footer-bottom'>
-          <span>© 2026 Ustadi. All rights reserved.</span>
-          <span>Made in Morocco 🇲🇦</span>
+        <div className="footer-bottom">
+          <span>© 2026 Ustadi. Tous droits réservés.</span>
+          <span>Fabriqué au Maroc 🇲🇦</span>
         </div>
       </div>
     </>

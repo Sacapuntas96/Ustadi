@@ -52,6 +52,15 @@ export default{
 
             return Response.json(results);
        }
+       else if(url.pathname == "/api/reviews"){
+        const content = url.searchParams.get("content")
+        const date = new Date()
+
+        const {retults} = await env.DB
+            .prepare("INSERT INTO reviews (content, user_id, publish_date) VALUES (?, ?, ?)")
+            .bind(content, 0, date.toISOString().replace("T", " ").replace("Z", "").slice(0, 19))
+            .all()
+       }
 
        return new Response("not found", {status : 404});
     }

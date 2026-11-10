@@ -10,24 +10,34 @@ export default function GetHelp() {
         </a>
         <div className="button-container">
           <Link to={"/"} className="nav-link">
-            <button><p>Home</p></button>
+            <button>
+              <p>Accueil</p>
+            </button>
           </Link>
           <Link to={"/listing"} className="nav-link">
-            <button><p>Subjects</p></button>
+            <button>
+              <p>Matières</p>
+            </button>
           </Link>
           <Link to={"/contact"} className="nav-link">
-            <button><p>Contact</p></button>
+            <button>
+              <p>Contact</p>
+            </button>
           </Link>
           <Link to={"/get-help"} className="nav-link">
-            <button className="is-active"><p>Help</p></button>
+            <button className="is-active">
+              <p>Aide</p>
+            </button>
           </Link>
         </div>
         <div className="account">
           <Link to="/login" className="nav-link">
-            <button className="login">Login</button>
+            <button className="login">Se connecter</button>
           </Link>
           <Link to={"/sign-in"} className="nav-link">
-            <button className="signin">Sign in</button>
+            <Link to={"/sign-in"} className="nav-link">
+              <button className="signin">S'inscrire</button>
+            </Link>
           </Link>
           <button className="profile"></button>
         </div>
@@ -38,8 +48,8 @@ export default function GetHelp() {
         <p>
           Ustadi met en relation des élèves et des étudiants avec des tuteurs
           particuliers au Maroc. Tu cherches un professeur pour une matière
-          précise, à un niveau donné et dans un budget défini : la plateforme
-          te permet de parcourir les annonces, de comparer les profils et de
+          précise, à un niveau donné et dans un budget défini : la plateforme te
+          permet de parcourir les annonces, de comparer les profils et de
           contacter directement le tuteur qui te convient. Aucun cours n’est
           imposé, tu choisis librement.
         </p>
@@ -75,12 +85,12 @@ export default function GetHelp() {
 
         <h2>Paiement et tarifs</h2>
         <p>
-          Les tarifs sont fixés par chaque tuteur et affichés clairement sur
-          son annonce, en dirhams par heure. Ustadi ne prélève pas de frais
-          cachés : le montant affiché est celui que tu paieras. Le paiement se
-          règle directement avec le tuteur selon le mode convenu (espèces,
-          virement ou paiement en ligne si le tuteur le propose). Demande
-          toujours un reçu ou une confirmation écrite après paiement.
+          Les tarifs sont fixés par chaque tuteur et affichés clairement sur son
+          annonce, en dirhams par heure. Ustadi ne prélève pas de frais cachés :
+          le montant affiché est celui que tu paieras. Le paiement se règle
+          directement avec le tuteur selon le mode convenu (espèces, virement ou
+          paiement en ligne si le tuteur le propose). Demande toujours un reçu
+          ou une confirmation écrite après paiement.
         </p>
 
         <h2>Gérer ton compte et tes réservations</h2>
@@ -98,8 +108,8 @@ export default function GetHelp() {
           Un tuteur ne répond pas, une séance a été annulée sans prévenir, un
           paiement pose problème ou un profil te semble suspect ? Utilise la
           page « Contact » en choisissant « Signaler un problème » et décris ce
-          qui s’est passé avec le plus de détails possible (nom du tuteur,
-          date, message d’erreur). Ne partage jamais ton mot de passe ni tes
+          qui s’est passé avec le plus de détails possible (nom du tuteur, date,
+          message d’erreur). Ne partage jamais ton mot de passe ni tes
           informations bancaires, même avec un tuteur.
         </p>
 
@@ -115,49 +125,51 @@ export default function GetHelp() {
 
         <h2>Besoin d’aide supplémentaire ?</h2>
         <p>
-          Si tu ne trouves pas la réponse à ta question dans cette page, écris
-          à <a href="mailto:hello@ustadi.ma">hello@ustadi.ma</a> ou passe par la
+          Si tu ne trouves pas la réponse à ta question dans cette page, écris à{" "}
+          <a href="mailto:hello@ustadi.ma">hello@ustadi.ma</a> ou passe par la
           page « Contact ». Décris ton problème en précisant ton nom
-          d’utilisateur et l’appareil que tu utilises (téléphone ou
-          ordinateur) : cela nous aide à répondre plus vite. L’équipe répond du
-          lundi au vendredi, de 9h à 18h.
+          d’utilisateur et l’appareil que tu utilises (téléphone ou ordinateur)
+          : cela nous aide à répondre plus vite. L’équipe répond du lundi au
+          vendredi, de 9h à 18h.
         </p>
       </div>
 
       <div className="footer">
         <div className="footer-top">
           <div className="first-container">
-            <h1>Ustadi<span>.</span></h1>
+            <h1>
+              Ustadi<span>.</span>
+            </h1>
             <p className="footer-tagline">
-              Find the right tutor for every subject, at the right price.
+              Trouve le bon professeur pour chaque matière, au bon prix.
             </p>
-            <label htmlFor="review">Want to leave us a review ?</label>
+            <label htmlFor="review">Envie de nous laisser un avis ?</label>
             <div className="submit">
-              <input id="review" type="text" placeholder="I think that..." />
-              <button>Submit</button>
+              <input id="review" type="text" placeholder="Je pense que..." />
+              <button>Envoyer</button>
             </div>
           </div>
 
           <div className="footer-links">
             <div className="footer-column">
-              <h2>Support</h2>
+              <h2>Assistance</h2>
               <Link to={"/get-help"} className="nav-link">
-                <button>Get help</button>
+                <button>Obtenir de l'aide</button>
               </Link>
-              <button>How it works</button>
+              <button>Comment ça marche</button>
             </div>
             <div className="footer-column">
-              <h2>Legal</h2>
+              <h2>Mentions légales</h2>
               <Link to="/privacy-policy" className="nav-link">
-                <button>Privacy policy</button>
+                <button>Politique de confidentialité</button>
               </Link>
             </div>
           </div>
         </div>
 
         <div className="footer-bottom">
-          <span>© 2026 Ustadi. All rights reserved.</span>
-          <span>Made in Morocco 🇲🇦</span>
+          <span>© 2026 Ustadi. Tous droits réservés.</span>
+          <span>Fabriqué au Maroc 🇲🇦</span>
         </div>
       </div>
     </>
