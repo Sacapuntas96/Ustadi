@@ -6,7 +6,7 @@ export default function ForgotPassword() {
   const [is_verificating, setIsVerificating] = useState(false);
   const [error, setError] = useState(false);
   const [error_message, setErrorMessage] = useState(
-    "The provided e-mail format is invalid",
+    "Cet adresse e-mail est invalide",
   );
   const [email, setEmail] = useState("");
   const [selected_method, setSelectedMethod] = useState("username");
@@ -68,7 +68,7 @@ export default function ForgotPassword() {
       if (selected_method == "e-mail") {
         setErrorMessage("The provided e-mail format is invalid");
       } else {
-        setErrorMessage("The provided username is invalid");
+        setErrorMessage("Ce nom d'utilisateur est invalide");
       }
       setError(true);
     }

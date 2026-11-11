@@ -129,24 +129,6 @@ export default function Listing() {
     query,
   ]);
 
-  useMemo(() => {
-    console.log("Variables:", {
-      selectedSubject,
-      selectedLocation,
-      selectedGrade,
-      selectedType,
-      min_price,
-      max_price,
-    });
-    console.log("Return : ", listings);
-  }, [
-    selectedSubject,
-    selectedLocation,
-    selectedGrade,
-    selectedType,
-    min_price,
-    max_price,
-  ]);
   const [review_content, setReviewContent] = useState("");
   return (
     <>
@@ -397,7 +379,7 @@ export default function Listing() {
                 No tutors match your filters. Try clearing them.
               </p>
             ) : (
-              listings.map((p) => <ListingCard element={p} key={p.title} />)
+              listings.map((p) => <ListingCard element={p} key={p.listing_id} />)
             )}
           </div>
         </div>
@@ -457,7 +439,7 @@ function ListingCard({ element }) {
   const [review_content, setReviewContent] = useState("");
   return (
     <Link to={`/listing-page?id=${element.listing_id}`} className="nav-link">
-      <div className="posting" key={element.listing_id}>
+      <div className="posting">
         <h4>{element.title}</h4>
         <div>
           <h5>

@@ -1,14 +1,22 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect, useMemo, memo } from "react";
 import "../Index.css";
-import { Link, useParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 export default function ListingPage() {
-  let user_data;
+  const [listingData, setListingData] = useState({});
+  const [publisherData, setPublisherData] = useState({});
+  const [searchParms, setSearchParm] = useSearchParams();
+  useEffect(() => {
+    fetch(`/api/listing-page?id=${searchParms.get("id")}`)
+      .then((res) => res.json())
+      .then(value => setListingData(...value))
+  }, [])
 
-  console.log(useParams());
-  /*useEffect(() => {
-    fetch(`/api/listings?${}`)
-  })*/
+  useEffect(() => {
+    fetch(`/api/users?id=${searchParms.get("id")}`)
+      .then((res) => res.json())
+      .then(value => setPublisherData(...value))
+  }, [])
 
   const [review_content, setReviewContent] = useState("");
   return (
@@ -50,9 +58,66 @@ export default function ListingPage() {
         </div>
       </div>
 
-      <div className="listing-page-container">
-        <div className="listing-page-content"></div>
-      </div>
+      <main className="listing-page-container">
+  <Link to="/listing" className="listing-page-back">← Retour aux annonces</Link>
+
+  {listingData && (
+    <div className="listing-page-grid">
+      <article className="listing-page-content">
+        <p className="listing-page-eyebrow">{listingData.subject}</p>
+        <h1>{listingData.title}</h1>
+
+        <div className="listing-page-tags">
+          <span className="listing-tag">{listingData.grade}</span>
+          <span className="listing-tag">{listingData.type}</span>
+          <span className="listing-tag">{listingData.location}</span>
+        </div>
+
+        <dl className="listing-page-details">
+          <div>
+            <dt>Matière</dt>
+            <dd>{listingData.subject}</dd>
+          </div>
+          <div>
+            <dt>Niveau</dt>
+            <dd>{listingData.grade}</dd>
+          </div>
+          <div>
+            <dt>Ville</dt>
+            <dd>{listingData.location}</dd>
+          </div>
+          <div>
+            <dt>Type de cours</dt>
+            <dd>{listingData.type}</dd>
+          </div>
+          <div>
+            <dt>Publiée le</dt>
+            <dd>
+              {new Date(listingData.publish_date).toLocaleDateString("fr-FR", {
+                dateStyle: "long",
+              })}
+            </dd>
+          </div>
+          <div>
+            <dt>Identifiant d'annonce</dt>
+            <dd>{listingData.listing_id}</dd>
+          </div>
+        </dl>
+      </article>
+
+      <aside className="listing-page-side">
+        <p className="listing-page-side-label">Tarif</p>
+        <p className="listing-page-price">
+          {listingData.hourly_price} DH<span> / heure</span>
+        </p>
+        <button className="listing-page-cta">Contacter le professeur</button>
+        <p className="listing-page-note">
+          Annonce publiée par le professeur  <Link className="nav-link" style={{color:"#ff8f3c", fontWeight:600}}>{publisherData.last_name} {publisherData.first_name}</Link>
+        </p>
+      </aside>
+    </div>
+  )}
+</main>
 
       <div className="footer">
         <div className="footer-top">
