@@ -21,7 +21,6 @@ dist-ssr
 # Secrets and database exports
 .env
 .env.*
-dump.sql
 *.sqlite
 
 # Editor directories and files
