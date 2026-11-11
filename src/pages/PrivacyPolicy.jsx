@@ -2,42 +2,47 @@ import "../Index.css";
 import { Link } from "react-router-dom";
 
 export default function PrivacyPolicy() {
+  const [review_content, setReviewContent] = useState("");
   return (
     <>
-      <div className='header'>
-        <a href=''>
-          <img src='main.html' alt='' />
+      <div className="header">
+        <a href="">
+          <img src="main.html" alt="" />
         </a>
-        <div className='button-container'>
-          <Link to={"/"} className='nav-link'>
+        <div className="button-container">
+          <Link to={"/"} className="nav-link">
             <button>
-              <p>Home</p>
+              <p>Accueil</p>
             </button>
           </Link>
-          <Link to={"/listing"} className='nav-link'>
+          <Link to={"/listing"} className="nav-link">
             <button>
-              <p>Subjects</p>
+              <p>Matières</p>
             </button>
           </Link>
-          <button>
-            <p>Contact</p>
-          </button>
-          <Link to={"/get-help"} className='nav-link'>
-                <button><p>Help</p></button>
-              </Link>
+          <Link to={"/contact"} className="nav-link">
+            <button>
+              <p>Contact</p>
+            </button>
+          </Link>
+          <Link to={"/get-help"} className="nav-link">
+            <button>
+              <p>Aide</p>
+            </button>
+          </Link>
         </div>
-        <div className='account'>
-          <Link to='/login' className='nav-link'>
-            <button className='login'>Login</button>
+        <div className="account">
+          <Link to="/login" className="nav-link">
+            <button className="login">Se connecter</button>
           </Link>
-          <Link to={"/sign-in"} className='nav-link'>
-            <button className='signin'>Sign in</button>
+          <Link to={"/sign-in"} className="nav-link">
+            <button className="signin">S'inscrire</button>
           </Link>
-          <button className='profile'></button>
+          <button className="profile"></button>
         </div>
       </div>
 
-      <div className='policy'>
+      <div className="policy">
         <h1>Privacy Policy</h1>
         <h4>Last updated : 20th of October 2026</h4>
 
@@ -183,8 +188,16 @@ export default function PrivacyPolicy() {
             </p>
             <label htmlFor="review">Envie de nous laisser un avis ?</label>
             <div className="submit">
-              <input id="review" type="text" placeholder="Je pense que..." />
-              <button>Envoyer</button>
+              <input
+                id="review"
+                type="text"
+                value={review_content}
+                onChange={(e) => setReviewContent(e.target.value)}
+                placeholder="Je pense que..."
+              />
+              <Link to={`/contact?content=${review_content}`}>
+                <button>Envoyer</button>
+              </Link>
             </div>
           </div>
 

@@ -1,7 +1,9 @@
+import { useState } from "react";
 import "../Index.css";
 import { Link } from "react-router-dom";
 
 export default function Home() {
+  const [review_content, setReviewContent] = useState("");
   return (
     <>
       <div className="header">
@@ -35,16 +37,15 @@ export default function Home() {
             <button className="login">Se connecter</button>
           </Link>
           <Link to={"/sign-in"} className="nav-link">
-            <Link to={"/sign-in"} className="nav-link">
-              <button className="signin">S'inscrire</button>
-            </Link>
+            <button className="signin">S'inscrire</button>
           </Link>
           <button className="profile"></button>
         </div>
       </div>
       <div className="hero">
         <h1>
-          Le professeur&nbsp; <span>idéal</span><br />
+          Le professeur&nbsp; <span>idéal</span>
+          <br />
           Au prix&nbsp;<span>idéal</span>
         </h1>
         <p>Trouve la matière qui te convient</p>
@@ -77,7 +78,10 @@ export default function Home() {
           Tu cherches un emploi de professeur particulier ? <br />
           Nous recrutons !
         </h1>
-        <p>Rejoins notre communauté et trouve des élèves à qui enseigner ta matière</p>
+        <p>
+          Rejoins notre communauté et trouve des élèves à qui enseigner ta
+          matière
+        </p>
         <button>Postuler</button>
       </div>
       <div className="footer">
@@ -91,8 +95,16 @@ export default function Home() {
             </p>
             <label htmlFor="review">Envie de nous laisser un avis ?</label>
             <div className="submit">
-              <input id="review" type="text" placeholder="Je pense que..." />
-              <button>Envoyer</button>
+              <input
+                id="review"
+                type="text"
+                value={review_content}
+                onChange={(e) => setReviewContent(e.target.value)}
+                placeholder="Je pense que..."
+              />
+              <Link to={`/contact?content=${review_content}`}>
+                <button>Envoyer</button>
+              </Link>
             </div>
           </div>
 

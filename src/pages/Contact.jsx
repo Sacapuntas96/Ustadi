@@ -1,15 +1,12 @@
-import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import "./../Index.css";
 
 export default function Contact() {
-  const [review, setReview] = useState("");
+  const [review, setReview] = useState(
+    useSearchParams()[0].get("content") ?? "",
+  );
   const [messageError, setMessageError] = useState(false);
-  const displayError = (message) => {
-    return message == "";
-  } 
-
-
 
   return (
     <>
@@ -44,9 +41,7 @@ export default function Contact() {
             <button className="login">Se connecter</button>
           </Link>
           <Link to={"/sign-in"} className="nav-link">
-            <Link to={"/sign-in"} className="nav-link">
-              <button className="signin">S'inscrire</button>
-            </Link>
+            <button className="signin">S'inscrire</button>
           </Link>
           <button className="profile"></button>
         </div>
@@ -54,7 +49,7 @@ export default function Contact() {
       <main className="contact-content">
         <section className="contact-container">
           <p className="contact-eyebrow">Contact</p>
-          <h1>Contact us</h1>
+          <h1>Contactez nous</h1>
           <p className="contact-intro">
             Une question, une suggestion ? Dites-nous ce que vous pensez
             d'Ustadi, nous lisons chaque message.
@@ -63,11 +58,12 @@ export default function Contact() {
           <form
             className="contact-form"
             onSubmit={(e) => {
-            if(review.length >= 15)
-                fetch(`/api/reviews?content=${review}`)
-                else{
-                    setMessageError(true);
-                };
+              if (review.length >= 15) {
+                fetch(`/api/reviews?content=${review}`);
+              } else {
+                setMessageError(true);
+                e.preventDefault();
+              }
             }}
           >
             <label htmlFor="contact-review">Donnez votre avis</label>
@@ -80,12 +76,12 @@ export default function Contact() {
               onChange={(e) => setReview(e.target.value)}
               style={{ resize: "none" }}
             />
-            {messageError && 
-                <p className="error">L'avis doit faire au moins 15 caractères</p>
-            }
+            {messageError && (
+              <p className="error">L'avis doit faire au moins 15 caractères</p>
+            )}
             <div className="contact-actions">
               <span className="contact-count">{review.length} / 500</span>
-              <button type="submit" className="contact-submit" >
+              <button type="submit" className="contact-submit">
                 Envoyer
               </button>
             </div>
@@ -101,11 +97,6 @@ export default function Contact() {
             <p className="footer-tagline">
               Trouve le bon professeur pour chaque matière, au bon prix.
             </p>
-            <label htmlFor="review">Envie de nous laisser un avis ?</label>
-            <div className="submit">
-              <input id="review" type="text" placeholder="Je pense que..." />
-              <button>Envoyer</button>
-            </div>
           </div>
 
           <div className="footer-links">

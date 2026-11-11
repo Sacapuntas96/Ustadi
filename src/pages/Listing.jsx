@@ -147,6 +147,7 @@ export default function Listing() {
     min_price,
     max_price,
   ]);
+  const [review_content, setReviewContent] = useState("");
   return (
     <>
       <div className="header">
@@ -180,9 +181,7 @@ export default function Listing() {
             <button className="login">Se connecter</button>
           </Link>
           <Link to={"/sign-in"} className="nav-link">
-            <Link to={"/sign-in"} className="nav-link">
-              <button className="signin">S'inscrire</button>
-            </Link>
+            <button className="signin">S'inscrire</button>
           </Link>
           <button className="profile"></button>
         </div>
@@ -415,8 +414,16 @@ export default function Listing() {
             </p>
             <label htmlFor="review">Envie de nous laisser un avis ?</label>
             <div className="submit">
-              <input id="review" type="text" placeholder="Je pense que..." />
-              <button>Envoyer</button>
+              <input
+                id="review"
+                type="text"
+                value={review_content}
+                onChange={(e) => setReviewContent(e.target.value)}
+                placeholder="Je pense que..."
+              />
+              <Link to={`/contact?content=${review_content}`}>
+                <button>Envoyer</button>
+              </Link>
             </div>
           </div>
 
@@ -447,27 +454,30 @@ export default function Listing() {
 }
 
 function ListingCard({ element }) {
+  const [review_content, setReviewContent] = useState("");
   return (
-    <div className="posting" key={element.listing_id}>
-      <h4>{element.title}</h4>
-      <div>
-        <h5>
-          <span>Prix / heure</span>
-          <span>{element.hourly_price} DH</span>
-        </h5>
-        <h5>
-          <span>Sujet</span>
-          <span>{element.subject}</span>
-        </h5>
-        <h5>
-          <span>Localisation</span>
-          <span>{element.location}</span>
-        </h5>
-        <h5>
-          <span>Type</span>
-          <span>{element.type}</span>
-        </h5>
+    <Link to={`/listing-page?id=${element.listing_id}`} className="nav-link">
+      <div className="posting" key={element.listing_id}>
+        <h4>{element.title}</h4>
+        <div>
+          <h5>
+            <span>Prix / heure</span>
+            <span>{element.hourly_price} DH</span>
+          </h5>
+          <h5>
+            <span>Matière</span>
+            <span>{element.subject}</span>
+          </h5>
+          <h5>
+            <span>Localisation</span>
+            <span>{element.location}</span>
+          </h5>
+          <h5>
+            <span>Type</span>
+            <span>{element.type}</span>
+          </h5>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 }

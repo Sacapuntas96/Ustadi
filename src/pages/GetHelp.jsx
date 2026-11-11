@@ -1,7 +1,9 @@
+import { useState } from "react";
 import "../Index.css";
 import { Link } from "react-router-dom";
 
 export default function GetHelp() {
+  const [review_content, setReviewContent] = useState("");
   return (
     <>
       <div className="header">
@@ -35,9 +37,7 @@ export default function GetHelp() {
             <button className="login">Se connecter</button>
           </Link>
           <Link to={"/sign-in"} className="nav-link">
-            <Link to={"/sign-in"} className="nav-link">
-              <button className="signin">S'inscrire</button>
-            </Link>
+            <button className="signin">S'inscrire</button>
           </Link>
           <button className="profile"></button>
         </div>
@@ -145,8 +145,16 @@ export default function GetHelp() {
             </p>
             <label htmlFor="review">Envie de nous laisser un avis ?</label>
             <div className="submit">
-              <input id="review" type="text" placeholder="Je pense que..." />
-              <button>Envoyer</button>
+              <input
+                id="review"
+                type="text"
+                value={review_content}
+                onChange={(e) => setReviewContent(e.target.value)}
+                placeholder="Je pense que..."
+              />
+              <Link to={`/contact?content=${review_content}`}>
+                <button>Envoyer</button>
+              </Link>
             </div>
           </div>
 

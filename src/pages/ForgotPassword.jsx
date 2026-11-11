@@ -76,20 +76,20 @@ export default function ForgotPassword() {
 
   return (
     <>
-      <div className='container'>
-        <div className='landscape'>
-          <Link to='/' className='nav-link'>
+      <div className="container">
+        <div className="landscape">
+          <Link to="/" className="nav-link">
             <h1>
               Ustadi<span>.</span>
             </h1>
           </Link>
         </div>
-        <div className='filler'>
+        <div className="filler">
           <form onSubmit={(event) => event.preventDefault()}>
             {!is_verificating && (
               <>
                 <label>Username or e-mail</label>
-                <div className='selection'>
+                <div className="selection">
                   <button
                     className={
                       (selected_method === "username" ? "un" : "") + "selected"
@@ -114,12 +114,12 @@ export default function ForgotPassword() {
                   </button>
                 </div>
                 <input
-                  type='text'
+                  type="text"
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
                 />
-                {error && <p className='error'>{error_message}</p>}
-                <button type='button' onClick={() => proceed(email)}>
+                {error && <p className="error">{error_message}</p>}
+                <button type="button" onClick={() => proceed(email)}>
                   Verify Account
                 </button>
               </>
@@ -128,8 +128,8 @@ export default function ForgotPassword() {
               <>
                 <label>Verification Code</label>
                 <p>A verification code has been sent</p>
-                <input type='text' />
-                <button type='button'>Confirm Code</button>
+                <input type="text" />
+                <button type="button">Confirm Code</button>
               </>
             )}
           </form>
