@@ -229,7 +229,7 @@ a.nav-link { text-decoration: none; }
 }
 
 .hero::after {
-  content: "TUTORING IN MOROCCO · 2026";
+  content: "COURS PARTICULIERS AU MAROC · 2026";
   position: absolute;
   top: 44px;
   left: clamp(24px, 8vw, 140px);
