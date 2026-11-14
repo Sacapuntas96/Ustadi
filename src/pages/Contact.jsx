@@ -22,7 +22,7 @@ export default function Contact() {
           </Link>
           <Link to={"/listing"} className="nav-link">
             <button>
-              <p>Matières</p>
+              <p>Annonces</p>
             </button>
           </Link>
           <Link to={"/contact"} className="nav-link">

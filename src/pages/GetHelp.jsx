@@ -18,7 +18,7 @@ export default function GetHelp() {
           </Link>
           <Link to={"/listing"} className="nav-link">
             <button>
-              <p>Matières</p>
+              <p>Annonces</p>
             </button>
           </Link>
           <Link to={"/contact"} className="nav-link">
@@ -58,7 +58,7 @@ export default function GetHelp() {
         <p>
           L’inscription se fait avec une adresse e-mail valide ou un numéro de
           téléphone. Une fois connecté, complète ton profil : ton niveau
-          (collège, lycée, supérieur), les matières qui t’intéressent et ta
+          (collège, lycée, supérieur), les Annonces qui t’intéressent et ta
           ville. Un profil complet permet aux tuteurs de mieux répondre à tes
           demandes et t’évite de répéter les mêmes informations à chaque
           contact.

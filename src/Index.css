@@ -1849,6 +1849,112 @@ a.nav-link {
   font-weight: 600;
 }
 
+.listing-page-description {
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 1px solid var(--grey-200);
+}
+
+.listing-page-description h2 {
+  margin: 0 0 14px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--grey-400);
+}
+
+.listing-page-description p {
+  margin: 0;
+  max-width: 64ch;
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--grey-700);
+  white-space: pre-line;
+}
+
+.listing-page-description-empty {
+  font-style: italic;
+  color: var(--grey-400) !important;
+}
+
+.page-button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  height: fit-content;
+  gap: 15px;
+  padding: 24px 20px 32px;
+  box-sizing: border-box;
+}
+
+.page-button button {
+  height: 42px;
+  padding: 0 20px;
+  border: 1px solid var(--grey-900);
+  border-radius: 3px;
+  background: var(--grey-900);
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.1s ease;
+}
+
+.page-button button:hover {
+  background: var(--orange-500);
+  border-color: var(--orange-500);
+}
+
+.page-button button:active {
+  background: var(--orange-600);
+  border-color: var(--orange-600);
+  transform: scale(0.97);
+}
+
+.page-button button:focus-visible {
+  outline: 2px solid var(--orange-500);
+  outline-offset: 2px;
+}
+
+.profile-head {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.profile-head .listing-page-eyebrow {
+  margin-bottom: 8px;
+}
+
+.profile-avatar {
+  flex-shrink: 0;
+  width: 72px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--orange-50);
+  border: 1px solid var(--orange-200);
+  color: var(--orange-700);
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.profile-listings {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
 @media (max-width: 900px) {
   .hero {
     padding: 72px 24px 56px;

@@ -9,14 +9,14 @@ export default function ListingPage() {
   useEffect(() => {
     fetch(`/api/listing-page?id=${searchParms.get("id")}`)
       .then((res) => res.json())
-      .then(value => setListingData(...value))
-  }, [])
+      .then((value) => setListingData(...value));
+  }, []);
 
   useEffect(() => {
-    fetch(`/api/users?id=${searchParms.get("id")}`)
+    fetch(`/api/users?id=${listingData.author_id}`)
       .then((res) => res.json())
-      .then(value => setPublisherData(...value))
-  }, [])
+      .then((value) => setPublisherData(...value));
+  }, []);
 
   const [review_content, setReviewContent] = useState("");
   return (
@@ -33,7 +33,7 @@ export default function ListingPage() {
           </Link>
           <Link to={"/listing"} className="nav-link">
             <button>
-              <p>Matières</p>
+              <p>Annonces</p>
             </button>
           </Link>
           <Link to={"/contact"} className="nav-link">
@@ -59,65 +59,91 @@ export default function ListingPage() {
       </div>
 
       <main className="listing-page-container">
-  <Link to="/listing" className="listing-page-back">← Retour aux annonces</Link>
+        <Link to="/listing" className="listing-page-back">
+          ← Retour aux annonces
+        </Link>
 
-  {listingData && (
-    <div className="listing-page-grid">
-      <article className="listing-page-content">
-        <p className="listing-page-eyebrow">{listingData.subject}</p>
-        <h1>{listingData.title}</h1>
+        {listingData && (
+          <div className="listing-page-grid">
+            <article className="listing-page-content">
+              <p className="listing-page-eyebrow">{listingData.subject}</p>
+              <h1>{listingData.title}</h1>
 
-        <div className="listing-page-tags">
-          <span className="listing-tag">{listingData.grade}</span>
-          <span className="listing-tag">{listingData.type}</span>
-          <span className="listing-tag">{listingData.location}</span>
-        </div>
+              <div className="listing-page-tags">
+                <span className="listing-tag">{listingData.grade}</span>
+                <span className="listing-tag">{listingData.type}</span>
+                <span className="listing-tag">{listingData.location}</span>
+              </div>
 
-        <dl className="listing-page-details">
-          <div>
-            <dt>Matière</dt>
-            <dd>{listingData.subject}</dd>
-          </div>
-          <div>
-            <dt>Niveau</dt>
-            <dd>{listingData.grade}</dd>
-          </div>
-          <div>
-            <dt>Ville</dt>
-            <dd>{listingData.location}</dd>
-          </div>
-          <div>
-            <dt>Type de cours</dt>
-            <dd>{listingData.type}</dd>
-          </div>
-          <div>
-            <dt>Publiée le</dt>
-            <dd>
-              {new Date(listingData.publish_date).toLocaleDateString("fr-FR", {
-                dateStyle: "long",
-              })}
-            </dd>
-          </div>
-          <div>
-            <dt>Identifiant d'annonce</dt>
-            <dd>{listingData.listing_id}</dd>
-          </div>
-        </dl>
-      </article>
+              <dl className="listing-page-details">
+                <div>
+                  <dt>Matière</dt>
+                  <dd>{listingData.subject}</dd>
+                </div>
+                <div>
+                  <dt>Niveau</dt>
+                  <dd>{listingData.grade}</dd>
+                </div>
+                <div>
+                  <dt>Ville</dt>
+                  <dd>{listingData.location}</dd>
+                </div>
+                <div>
+                  <dt>Type de cours</dt>
+                  <dd>{listingData.type}</dd>
+                </div>
+                <div>
+                  <dt>Publiée le</dt>
+                  <dd>
+                    {new Date(listingData.publish_date).toLocaleDateString(
+                      "fr-FR",
+                      {
+                        dateStyle: "long",
+                      },
+                    )}
+                  </dd>
+                </div>
+                <div>
+                  <dt>Identifiant d'annonce</dt>
+                  <dd>{listingData.listing_id}</dd>
+                </div>
+              </dl>
 
-      <aside className="listing-page-side">
-        <p className="listing-page-side-label">Tarif</p>
-        <p className="listing-page-price">
-          {listingData.hourly_price} DH<span> / heure</span>
-        </p>
-        <button className="listing-page-cta">Contacter le professeur</button>
-        <p className="listing-page-note">
-          Annonce publiée par le professeur  <Link className="nav-link" style={{color:"#ff8f3c", fontWeight:600}}>{publisherData.last_name} {publisherData.first_name}</Link>
-        </p>
-      </aside>
-    </div>
-  )}
-</main>
+              <section className="listing-page-description">
+                <h2>Description</h2>
+                {"listingData.description" ? (
+                  <p>{listingData.description}</p>
+                ) : (
+                  <p className="listing-page-description-empty">
+                    Aucune description fournie.
+                  </p>
+                )}
+              </section>
+            </article>
+
+            <aside className="listing-page-side">
+              <p className="listing-page-side-label">Tarif</p>
+              <p className="listing-page-price">
+                {listingData.hourly_price} DH<span> / heure</span>
+              </p>
+              <Link to={`/user-profile?id=${listingData.author_id}`}>
+              <button className="listing-page-cta">
+                Contacter le professeur
+              </button>
+              </Link>
+              <p className="listing-page-note">
+                Annonce publiée par le professeur{" "}
+                <Link
+                  className="nav-link"
+                  style={{ color: "#ff8f3c", fontWeight: 600 }}
+                >
+                  {publisherData.last_name ?? "(aucun nom de famille fourni)"} {publisherData.first_name}
+                </Link>
+              </p>
+            </aside>
+          </div>
+        )}
+      </main>
 
       <div className="footer">
         <div className="footer-top">

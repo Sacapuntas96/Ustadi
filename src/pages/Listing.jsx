@@ -82,6 +82,9 @@ export default function Listing() {
   const [max_price, setMaxPrice] = useState(0);
   const [min_price, setMinPrice] = useState(0);
 
+  const MAX_LISTING_PER_PAGE = 15;
+  const [pageNumber, setPageNumber] = useState(1);
+
   const closeAll = () => {
     setSubjectHover(false);
     setGradeHover(false);
@@ -144,7 +147,7 @@ export default function Listing() {
           </Link>
           <Link to={"/listing"} className="nav-link">
             <button className="is-active">
-              <p>Matières</p>
+              <p>Annonces</p>
             </button>
           </Link>
           <Link to={"/contact"} className="nav-link">
@@ -367,8 +370,9 @@ export default function Listing() {
             </button>
           </div>
 
-          <div className="listing">
-            {listings.length === 0 ? (
+          <div style={{width:100 + "%", display:"flex", flexDirection:"column"}}>
+            <div className="listing">
+{listings.length === 0 ? (
               <p
                 style={{
                   gridColumn: "1 / -1",
@@ -379,10 +383,18 @@ export default function Listing() {
                 No tutors match your filters. Try clearing them.
               </p>
             ) : (
-              listings.map((p) => <ListingCard element={p} key={p.listing_id} />)
+              listings.slice((pageNumber - 1) * MAX_LISTING_PER_PAGE, pageNumber * MAX_LISTING_PER_PAGE).map((p) => <ListingCard element={p} key={p.listing_id} />)
             )}
+            </div>
+            <div className="page-button">
+              <button onClick={() => pageNumber > 1 ? setPageNumber(prev => prev - 1) : setPageNumber(prev => prev)}>Retour</button>
+              <button onClick={() => pageNumber < (listings.length / MAX_LISTING_PER_PAGE) ? setPageNumber(prev => prev + 1) : setPageNumber(prev => prev)
+              }>Suivant</button>
+            </div>
           </div>
+          
         </div>
+        
       </div>
 
       <div className="footer">

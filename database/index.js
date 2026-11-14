@@ -2,6 +2,7 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     if (url.pathname == "/api/listings") {
+      const listing_id = url.searchParams.get("author_id");
       const subject = url.searchParams.get("subject");
       const location = url.searchParams.get("location");
       const grade = url.searchParams.get("grade");
@@ -11,6 +12,7 @@ export default {
       const query = url.searchParams.get("query");
 
       const variables = {
+        listing_id: listing_id,
         subject: subject,
         location: location,
         grade: grade,
