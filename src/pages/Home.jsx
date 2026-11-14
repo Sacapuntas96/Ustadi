@@ -4,6 +4,27 @@ import { Link } from "react-router-dom";
 
 export default function Home() {
   const [review_content, setReviewContent] = useState("");
+
+  const subjects = [
+    "Français",
+    "Arabe",
+    "Amazighe",
+    "Anglais",
+    "Espagnol",
+    "Mathématiques",
+    "Physique-Chimie",
+    "Sciences de la Vie et de la Terre (SVT)",
+    "Histoire-Géographie",
+    "Éducation islamique",
+    "Philosophie",
+    "Informatique",
+    "Technologie",
+    "Éducation physique et sportive",
+    "Éducation artistique",
+  ];
+
+  const [query, setQuery] = useState("");
+
   return (
     <>
       <div className="header">
@@ -51,25 +72,25 @@ export default function Home() {
         <p>Trouve la matière qui te convient</p>
         <div className="catalog">
           <div className="search">
-            <input placeholder="Rechercher un cours..." type="text" />
-            <button>Rechercher</button>
+            <input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Rechercher un cours..."
+              type="text"
+            />
+            <Link className="nav-link" to={`/listing?query=${query}`}>
+              <button>Rechercher</button>
+            </Link>
           </div>
           <div className="subjects">
-            <button>Français</button>
-            <button>Arabe</button>
-            <button>Amazighe</button>
-            <button>Anglais</button>
-            <button>Espagnol</button>
-            <button>Mathématiques</button>
-            <button>Physique-Chimie</button>
-            <button>Sciences de la Vie et de la Terre (SVT)</button>
-            <button>Histoire-Géographie</button>
-            <button>Éducation islamique</button>
-            <button>Philosophie</button>
-            <button>Informatique</button>
-            <button>Technologie</button>
-            <button>Éducation physique et sportive</button>
-            <button>Éducation artistique</button>
+            {subjects.map((subject) => (
+              <Link
+                to={`/listing?subject=${subject}`}
+                key={subjects.indexOf(subject)}
+              >
+                <button>{subject}</button>
+              </Link>
+            ))}
           </div>
         </div>
       </div>
@@ -82,7 +103,9 @@ export default function Home() {
           Rejoins notre communauté et trouve des élèves à qui enseigner ta
           matière
         </p>
-        <button>Postuler</button>
+        <Link to={"/sign-in"}>
+          <button>Postuler</button>
+        </Link>
       </div>
       <div className="footer">
         <div className="footer-top">

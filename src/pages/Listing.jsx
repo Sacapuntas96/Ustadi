@@ -1,6 +1,6 @@
 import { useEffectEvent, useEffect, useState, useMemo } from "react";
 import "../Index.css";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 export default function Listing() {
   const SUBJECTS = [
@@ -18,7 +18,7 @@ export default function Listing() {
     "Informatique",
     "Technologie",
     "Éducation physique et sportive",
-    "Éducation artistique",
+    "Éducation artistique"
   ];
 
   const GRADES = [
@@ -62,6 +62,9 @@ export default function Listing() {
     "Dakhla",
   ];
 
+  const [searchParms, setSearchParm] = useSearchParams();
+  const passed_subject = searchParms.get("subject")
+
   const TYPES = ["Distanciel", "Présentiel", "Hybride"];
 
   const [listings, setListings] = useState([]);
@@ -71,19 +74,19 @@ export default function Listing() {
   const [typeHover, setTypeHover] = useState(false);
   const [locationHover, setLocationHover] = useState(false);
 
-  const [selectedSubject, setSelectedSubject] = useState(null);
+  const [selectedSubject, setSelectedSubject] = useState(passed_subject);
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedGrade, setSelectedGrade] = useState(null);
   const [selectedType, setSelectedType] = useState(null);
 
-  const [tempQuery, setTempQuery] = useState("");
-  const [query, setQuery] = useState("");
+  const [tempQuery, setTempQuery] = useState(searchParms.get("query") || "");
+  const [query, setQuery] = useState(searchParms.get("query") || "");
 
   const [max_price, setMaxPrice] = useState(0);
   const [min_price, setMinPrice] = useState(0);
 
   const MAX_LISTING_PER_PAGE = 15;
-  const [pageNumber, setPageNumber] = useState(1);
+  const [pageNumber, setPageNumber] = useState(2);
 
   const closeAll = () => {
     setSubjectHover(false);
@@ -184,9 +187,15 @@ export default function Listing() {
               type="text"
               placeholder="Rechercher par sujet, nom ou ville…"
               value={tempQuery}
-              onChange={(e) => setTempQuery(e.target.value)}
+              onChange={(e) => {
+                setTempQuery(e.target.value)
+                setPageNumber(1)
+              }}
               onKeyDown={(event) => {
-                if (event.key == "Enter") setQuery(tempQuery);
+                if (event.key == "Enter") {
+                    setQuery(tempQuery);
+                  setPageNumber(1)
+                  }
               }}
             />
             <button
@@ -380,17 +389,19 @@ export default function Listing() {
                   fontSize: 14,
                 }}
               >
-                No tutors match your filters. Try clearing them.
+                Aucun professeur ne correspond à vos filtres. Essayez de les retirer.
               </p>
             ) : (
               listings.slice((pageNumber - 1) * MAX_LISTING_PER_PAGE, pageNumber * MAX_LISTING_PER_PAGE).map((p) => <ListingCard element={p} key={p.listing_id} />)
             )}
             </div>
+            {listings.length / MAX_LISTING_PER_PAGE > 1 && (
             <div className="page-button">
               <button onClick={() => pageNumber > 1 ? setPageNumber(prev => prev - 1) : setPageNumber(prev => prev)}>Retour</button>
               <button onClick={() => pageNumber < (listings.length / MAX_LISTING_PER_PAGE) ? setPageNumber(prev => prev + 1) : setPageNumber(prev => prev)
               }>Suivant</button>
             </div>
+)}
           </div>
           
         </div>

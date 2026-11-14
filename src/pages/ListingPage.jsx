@@ -6,6 +6,7 @@ export default function ListingPage() {
   const [listingData, setListingData] = useState({});
   const [publisherData, setPublisherData] = useState({});
   const [searchParms, setSearchParm] = useSearchParams();
+  
   useEffect(() => {
     fetch(`/api/listing-page?id=${searchParms.get("id")}`)
       .then((res) => res.json())

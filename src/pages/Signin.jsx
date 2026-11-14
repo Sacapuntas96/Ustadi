@@ -3,6 +3,7 @@ import "../Index.css";
 import { useState } from "react";
 
 export default function Signin() {
+  const [role, setRole] = useState("student");
   const [first_name, setFirstName] = useState("");
   const [last_name, setLasttName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -53,7 +54,7 @@ export default function Signin() {
     };
     setErrors(newErrors);
     if (!Object.values(newErrors).includes(true)) {
-      console.log("ok");
+      console.log("ok", { role });
     }
   };
 
@@ -69,6 +70,25 @@ export default function Signin() {
         </div>
         <div className="filler">
           <form>
+            <div className="field">
+              <label>Je suis</label>
+              <div className="selection" role="group" aria-label="Type de compte">
+                <button
+                  type="button"
+                  aria-pressed={role === "student"}
+                  onClick={() => setRole("student")}
+                >
+                  Élève
+                </button>
+                <button
+                  type="button"
+                  aria-pressed={role === "tutor"}
+                  onClick={() => setRole("tutor")}
+                >
+                  Professeur
+                </button>
+              </div>
+            </div>
             <div>
               <div className="field">
                 <label>Nom</label>
