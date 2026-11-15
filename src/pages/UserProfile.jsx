@@ -25,9 +25,9 @@ export default function UserProfile() {
   return (
     <>
       <div className="header">
-        <a href="">
+        <Link to={"/"}>
           <img src="main.html" alt="" />
-        </a>
+        </Link>
         <div className="button-container">
           <Link to={"/"} className="nav-link">
             <button>

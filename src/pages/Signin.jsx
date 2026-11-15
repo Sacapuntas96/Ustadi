@@ -1,9 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import "../Index.css";
 import { useState } from "react";
 
 export default function Signin() {
-  const [role, setRole] = useState("student");
+  const [searchParms, setSearchParm] = useSearchParams();  
+  const passed_type = searchParms.get("type");
+  
+  const [role, setRole] = useState(passed_type || "student");
   const [first_name, setFirstName] = useState("");
   const [last_name, setLasttName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");

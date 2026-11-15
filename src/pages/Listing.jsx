@@ -18,7 +18,7 @@ export default function Listing() {
     "Informatique",
     "Technologie",
     "Éducation physique et sportive",
-    "Éducation artistique"
+    "Éducation artistique",
   ];
 
   const GRADES = [
@@ -63,7 +63,7 @@ export default function Listing() {
   ];
 
   const [searchParms, setSearchParm] = useSearchParams();
-  const passed_subject = searchParms.get("subject")
+  const passed_subject = searchParms.get("subject");
 
   const TYPES = ["Distanciel", "Présentiel", "Hybride"];
 
@@ -86,7 +86,7 @@ export default function Listing() {
   const [min_price, setMinPrice] = useState(0);
 
   const MAX_LISTING_PER_PAGE = 15;
-  const [pageNumber, setPageNumber] = useState(2);
+  const [pageNumber, setPageNumber] = useState(1);
 
   const closeAll = () => {
     setSubjectHover(false);
@@ -139,9 +139,9 @@ export default function Listing() {
   return (
     <>
       <div className="header">
-        <a href="">
+        <Link to={"/"}>
           <img src="main.html" alt="" />
-        </a>
+        </Link>
         <div className="button-container">
           <Link to={"/"} className="nav-link">
             <button>
@@ -188,19 +188,22 @@ export default function Listing() {
               placeholder="Rechercher par sujet, nom ou ville…"
               value={tempQuery}
               onChange={(e) => {
-                setTempQuery(e.target.value)
-                setPageNumber(1)
+                setTempQuery(e.target.value);
+                setPageNumber(1);
               }}
               onKeyDown={(event) => {
                 if (event.key == "Enter") {
-                    setQuery(tempQuery);
-                  setPageNumber(1)
-                  }
+                  setQuery(tempQuery);
+                  setPageNumber(1);
+                }
               }}
             />
             <button
               className="search-button"
-              onClick={() => setQuery(tempQuery)}
+              onClick={() => {
+                setQuery(tempQuery);
+                setPageNumber(1);
+              }}
             >
               Recherche
             </button>
@@ -379,33 +382,58 @@ export default function Listing() {
             </button>
           </div>
 
-          <div style={{width:100 + "%", display:"flex", flexDirection:"column"}}>
+          <div
+            style={{
+              width: 100 + "%",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
             <div className="listing">
-{listings.length === 0 ? (
-              <p
-                style={{
-                  gridColumn: "1 / -1",
-                  color: "var(--grey-500)",
-                  fontSize: 14,
-                }}
-              >
-                Aucun professeur ne correspond à vos filtres. Essayez de les retirer.
-              </p>
-            ) : (
-              listings.slice((pageNumber - 1) * MAX_LISTING_PER_PAGE, pageNumber * MAX_LISTING_PER_PAGE).map((p) => <ListingCard element={p} key={p.listing_id} />)
-            )}
+              {listings.length === 0 ? (
+                <p
+                  style={{
+                    gridColumn: "1 / -1",
+                    color: "var(--grey-500)",
+                    fontSize: 14,
+                  }}
+                >
+                  Aucun professeur ne correspond à vos filtres. Essayez de les
+                  retirer.
+                </p>
+              ) : (
+                listings
+                  .slice(
+                    (pageNumber - 1) * MAX_LISTING_PER_PAGE,
+                    pageNumber * MAX_LISTING_PER_PAGE,
+                  )
+                  .map((p) => <ListingCard element={p} key={p.listing_id} />)
+              )}
             </div>
             {listings.length / MAX_LISTING_PER_PAGE > 1 && (
-            <div className="page-button">
-              <button onClick={() => pageNumber > 1 ? setPageNumber(prev => prev - 1) : setPageNumber(prev => prev)}>Retour</button>
-              <button onClick={() => pageNumber < (listings.length / MAX_LISTING_PER_PAGE) ? setPageNumber(prev => prev + 1) : setPageNumber(prev => prev)
-              }>Suivant</button>
-            </div>
-)}
+              <div className="page-button">
+                <button
+                  onClick={() =>
+                    pageNumber > 1
+                      ? setPageNumber((prev) => prev - 1)
+                      : setPageNumber((prev) => prev)
+                  }
+                >
+                  Retour
+                </button>
+                <button
+                  onClick={() =>
+                    pageNumber < listings.length / MAX_LISTING_PER_PAGE
+                      ? setPageNumber((prev) => prev + 1)
+                      : setPageNumber((prev) => prev)
+                  }
+                >
+                  Suivant
+                </button>
+              </div>
+            )}
           </div>
-          
         </div>
-        
       </div>
 
       <div className="footer">

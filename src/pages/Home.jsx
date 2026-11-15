@@ -28,9 +28,9 @@ export default function Home() {
   return (
     <>
       <div className="header">
-        <a href="">
+        <Link to={"/"}>
           <img src="main.html" alt="" />
-        </a>
+        </Link>
         <div className="button-container">
           <Link to={"/"} className="nav-link">
             <button className="is-active">
@@ -103,7 +103,7 @@ export default function Home() {
           Rejoins notre communauté et trouve des élèves à qui enseigner ta
           matière
         </p>
-        <Link to={"/sign-in"}>
+        <Link to={"/sign-in?type=tutor"}>
           <button>Postuler</button>
         </Link>
       </div>
