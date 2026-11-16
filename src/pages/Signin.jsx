@@ -3,9 +3,45 @@ import "../Index.css";
 import { useState } from "react";
 
 export default function Signin() {
-  const [searchParms, setSearchParm] = useSearchParams();  
+  const SUBJECTS = [
+    "Français",
+    "Arabe",
+    "Amazighe",
+    "Anglais",
+    "Espagnol",
+    "Mathématiques",
+    "Physique-Chimie",
+    "Sciences de la Vie et de la Terre (SVT)",
+    "Histoire-Géographie",
+    "Éducation islamique",
+    "Philosophie",
+    "Informatique",
+    "Technologie",
+    "Éducation physique et sportive",
+    "Éducation artistique",
+  ];
+
+  const GRADES = [
+    "CP",
+    "CE1",
+    "CE2",
+    "CM1",
+    "CM2",
+    "6ème",
+    "5ème",
+    "4ème",
+    "3ème",
+    "Seconde",
+    "Première",
+    "Terminale",
+    "Bac+1",
+    "Bac+2",
+    "Bac+3",
+  ];
+
+  const [searchParms, setSearchParm] = useSearchParams();
   const passed_type = searchParms.get("type");
-  
+
   const [role, setRole] = useState(passed_type || "student");
   const [first_name, setFirstName] = useState("");
   const [last_name, setLasttName] = useState("");
@@ -75,7 +111,11 @@ export default function Signin() {
           <form>
             <div className="field">
               <label>Je suis</label>
-              <div className="selection" role="group" aria-label="Type de compte">
+              <div
+                className="selection"
+                role="group"
+                aria-label="Type de compte"
+              >
                 <button
                   type="button"
                   aria-pressed={role === "student"}
