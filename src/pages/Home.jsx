@@ -77,6 +77,7 @@ export default function Home() {
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Rechercher un cours..."
               type="text"
+              onKeyDown={(e) => {if (e.key == "Enter") window.location.href = `/listing?query=${query}`}}
             />
             <Link className="nav-link" to={`/listing?query=${query}`}>
               <button>Rechercher</button>

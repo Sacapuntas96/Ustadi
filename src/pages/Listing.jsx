@@ -121,7 +121,7 @@ export default function Listing() {
     if (selectedType) params.set("type", selectedType);
     if (min_price) params.set("min_price", min_price);
     if (max_price) params.set("max_price", max_price);
-    if (query) params.set("query", query);
+    if (query) params.set("query", query.trim());
     fetch(`/api/listings?${params}`)
       .then((res) => res.json())
       .then((data) => setListings(data));

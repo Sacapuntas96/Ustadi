@@ -8,7 +8,7 @@ export default function Login() {
   const [errors, setErrors] = useState({});
 
   const identifier_error = (value) => {
-    return value.trim().length < 3;
+    return value.trim().length != 8;
   };
 
   const password_error = (pass) => {
@@ -18,6 +18,8 @@ export default function Login() {
   const clearError = (field) => {
     setErrors({ ...errors, [field]: false });
   };
+
+  const [loginType, setLoginType] = useState("Adresse e-mail");
 
   const handleSubmit = () => {
     const newErrors = {
@@ -43,17 +45,42 @@ export default function Login() {
         <div className="filler">
           <form>
             <div className="field">
-              <label>Nom d'utilisateur ou adresse e-mail</label>
+              <label>Je me connecte avec</label>
+              <div
+                className="selection"
+                role="group"
+                aria-label="Type de compte"
+              >
+                <button
+                  type="button"
+                  aria-pressed={loginType === "Adresse e-mail"}
+                  onClick={() => setLoginType("Adresse e-mail")}
+                >
+                  Adresse e-mail
+                </button>
+                <button
+                  type="button"
+                  aria-pressed={loginType === "Numéro de téléphone"}
+                  onClick={() => setLoginType("Numéro de téléphone")}
+                >
+                  Numéro de téléphone
+                </button>
+                
+              </div>
+            </div>
+            <div className="field">
+              <label>{loginType}</label>
               <input
                 type="text"
                 value={identifier}
+                placeholder={loginType == "Numéro de téléphone" ? "06 12 34 56 78" : "adresse@exemple.com"}
                 onChange={(e) => {
                   setIdentifier(e.target.value);
                   clearError("identifier");
                 }}
               />
               {errors.identifier && (
-                <p className="error">Nom d'utilisateur ou e-mail invalide</p>
+                <p className="error">Numéro de téléphone ou e-mail invalide</p>
               )}
             </div>
             <div className="field">
@@ -66,9 +93,7 @@ export default function Login() {
                   clearError("password");
                 }}
               />
-              {errors.password && (
-                <p className="error">8 caractères minimum</p>
-              )}
+              {errors.password && <p className="error">8 caractères minimum</p>}
             </div>
             <div
               style={{

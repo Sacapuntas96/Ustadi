@@ -910,6 +910,7 @@ a.nav-link {
 .listing {
   width: 100%;
   min-height: 300px;
+  max-height: 1150px;
   padding: 24px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -930,6 +931,7 @@ a.nav-link {
   display: flex;
   flex-direction: column;
   min-height: 190px;
+  height: 210px;
   cursor: pointer;
   color: inherit;
   text-decoration: none;
