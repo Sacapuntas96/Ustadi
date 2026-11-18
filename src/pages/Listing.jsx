@@ -390,7 +390,7 @@ export default function Listing() {
               alignItems: "center"
             }}
           >
-            {listings.length == 0 ? (
+            {listings.length == 0 && query == "" ? (
               <div className="loader"></div>
             ) : (
               <div className="listing">
