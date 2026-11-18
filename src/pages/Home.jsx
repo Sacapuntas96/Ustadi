@@ -23,6 +23,25 @@ export default function Home() {
     "Éducation artistique",
   ];
 
+  const HOW_IT_WORKS_STEPS = [
+    {
+      title: "Crée ton compte",
+      text: "Inscris-toi avec ton e-mail ou ton numéro de téléphone, puis indique ton niveau et ta ville.",
+    },
+    {
+      title: "Trouve ton professeur",
+      text: "Filtre les annonces par matière, niveau, ville et type de cours. Le tarif horaire en dirhams est affiché sur chaque annonce.",
+    },
+    {
+      title: "Contacte-le",
+      text: "Présente-toi, indique la matière et tes disponibilités. Le professeur confirme la séance et le lieu.",
+    },
+    {
+      title: "Apprends",
+      text: "Tu règles directement le professeur au tarif affiché, sans frais cachés.",
+    },
+  ];
+
   const [query, setQuery] = useState("");
 
   return (
@@ -77,7 +96,10 @@ export default function Home() {
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Rechercher un cours..."
               type="text"
-              onKeyDown={(e) => {if (e.key == "Enter") window.location.href = `/listing?query=${query}`}}
+              onKeyDown={(e) => {
+                if (e.key == "Enter")
+                  window.location.href = `/listing?query=${query}`;
+              }}
             />
             <Link className="nav-link" to={`/listing?query=${query}`}>
               <button>Rechercher</button>
@@ -107,6 +129,25 @@ export default function Home() {
         <Link to={"/sign-in?type=tutor"}>
           <button>Postuler</button>
         </Link>
+      </div>
+      <div className="how-it-works" id="how-it-works">
+        <div className="hiw-intro">
+          <h2>Comment ça marche</h2>
+          <p>De la recherche à la première séance, en quatre étapes.</p>
+          <Link to="/listing" className="nav-link">
+            <button className="hiw-cta">Voir les annonces</button>
+          </Link>
+        </div>
+        <ol className="hiw-steps">
+          {HOW_IT_WORKS_STEPS.map((step) => (
+            <li className="hiw-step" key={step.title}>
+              <div>
+                <h3>{step.title}</h3>
+                <p>{step.text}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
       </div>
       <div className="footer">
         <div className="footer-top">

@@ -390,7 +390,7 @@ export default function Listing() {
             }}
           >
             <div className="listing">
-              {listings.length === 0 ? (
+              (listings.length == 0 ? <div className="loader"></div> : {listings.length === 0 ? (
                 <p
                   style={{
                     gridColumn: "1 / -1",
@@ -408,7 +408,8 @@ export default function Listing() {
                     pageNumber * MAX_LISTING_PER_PAGE,
                   )
                   .map((p) => <ListingCard element={p} key={p.listing_id} />)
-              )}
+              )})
+              
             </div>
             {listings.length / MAX_LISTING_PER_PAGE > 1 && (
               <div className="page-button">
