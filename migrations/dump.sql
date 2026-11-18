@@ -1,9 +1,11 @@
 PRAGMA defer_foreign_keys=TRUE;
-CREATE TABLE reviews (   review_id INTEGER PRIMARY KEY AUTOINCREMENT,   content VARCHAR(500) NOT NULL,   user_id INTEGER NOT NULL,   publish_date DATE NOT NULL);
-INSERT INTO "reviews" ("review_id","content","user_id","publish_date") VALUES(1,'Ce site web est nul.',0,'2026-11-11 11:03:20');
-INSERT INTO "reviews" ("review_id","content","user_id","publish_date") VALUES(2,'sale negre tu pue des fesses',0,'2026-11-15 13:10:55');
-INSERT INTO "reviews" ("review_id","content","user_id","publish_date") VALUES(3,'cest fou que je nai pas entendu parler de ce site auparavant',0,'2026-11-16 10:15:03');
-INSERT INTO "reviews" ("review_id","content","user_id","publish_date") VALUES(4,'je suis avec Achraf en cours',0,'2026-11-16 15:02:18');
+DROP TABLE IF EXISTS listings;
+DROP TABLE IF EXISTS students;
+DROP TABLE IF EXISTS teachers;
+DROP TABLE IF EXISTS tutor_reviews;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS website_reviews;
+
 CREATE TABLE listings (   listing_id INTEGER PRIMARY KEY AUTOINCREMENT,   title TEXT NOT NULL,   publish_date TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,   author_id INTEGER NOT NULL,   type TEXT NOT NULL,   subject TEXT NOT NULL,   location TEXT NOT NULL,   grade TEXT NOT NULL,   hourly_price REAL NOT NULL CHECK (hourly_price > 0) , description varchar(500));
 INSERT INTO "listings" ("listing_id","title","publish_date","author_id","type","subject","location","grade","hourly_price","description") VALUES(1,'Soutien en français : lecture et grammaire','2026-01-12 09:15:00',1,'offer','Français','Casablanca','CM2',80,'Améliorer la lecture, l''orthographe et la grammaire avec des exercices ludiques.');
 INSERT INTO "listings" ("listing_id","title","publish_date","author_id","type","subject","location","grade","hourly_price","description") VALUES(2,'Initiation à la programmation Python','2026-01-20 14:30:00',2,'offer','Informatique','Rabat','Terminale',150,'Apprendre les bases de Python avec de petits projets. Aucun prérequis.');
@@ -97,7 +99,9 @@ INSERT INTO "users" ("user_id","first_name","last_name","age","email","bio","mai
 INSERT INTO "users" ("user_id","first_name","last_name","age","email","bio","main_subject","main_grade","birth_date","account_creation_date","number_of_listings","number_of_reviews") VALUES(28,'Adam','Rhazi',19,'adam.rhazi@example.com','Étudiant en informatique, passionné de jeux vidéo et de code.','Informatique','3ème','2007-04-04','2026-07-04',1,3);
 INSERT INTO "users" ("user_id","first_name","last_name","age","email","bio","main_subject","main_grade","birth_date","account_creation_date","number_of_listings","number_of_reviews") VALUES(29,'Rania','Mouline',29,'rania.mouline@example.com','Architecte, j''aide les élèves avec le dessin technique et les maquettes.','Technologie','Terminale','1997-10-10','2026-06-20',1,7);
 INSERT INTO "users" ("user_id","first_name","last_name","age","email","bio","main_subject","main_grade","birth_date","account_creation_date","number_of_listings","number_of_reviews") VALUES(30,'Zakaria','Filali',34,'zakaria.filali@example.com','Doctorant en physique, j''aime rendre les sciences accessibles à tous.','Physique-Chimie','Bac+3','1992-05-19','2026-01-05',1,22);
+CREATE TABLE website_reviews (review_id INTEGER PRIMARY KEY, author_id INT NOT NULL, content varchar(500) NOT NULL, published_date DATE CURRENT_TIMESTAMP);
+CREATE TABLE tutor_reviews (review_id INTEGER PRIMARY KEY, author_id INT NOT NULL, tutor_id INT NOT NULL, content varchar(500) NOT NULL, published_date DATE CURRENT_TIMESTAMP);
+INSERT INTO "tutor_reviews" ("review_id","author_id","tutor_id","content","published_date") VALUES(0,1,1,'alalaalalala',-2019);
 DELETE FROM sqlite_sequence;
-INSERT INTO "sqlite_sequence" ("name","seq") VALUES('reviews',4);
 INSERT INTO "sqlite_sequence" ("name","seq") VALUES('listings',30);
 INSERT INTO "sqlite_sequence" ("name","seq") VALUES('users',30);

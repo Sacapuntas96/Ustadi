@@ -93,6 +93,16 @@ export default {
 
         return Response.json(results);
       }
+    } else if (url.pathname == "/api/tutor-reviews") {
+      const tutor_id = parseInt(url.searchParams.get("id"));
+
+      const { results } = await env.DB.prepare(
+        "SELECT * FROM tutor_reviews WHERE tutor_id = ?",
+      )
+        .bind(tutor_id)
+        .all();
+
+      return Response.json(results);
     }
 
     return new Response("not found", { status: 404 });

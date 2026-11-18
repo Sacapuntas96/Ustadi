@@ -3,9 +3,10 @@ import "../Index.css";
 import { Link, useSearchParams } from "react-router-dom";
 
 export default function UserProfile() {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState([]);
   const [listings, setListings] = useState([]);
   const [searchParams, setSearchParm] = useSearchParams();
+  const [tutorReviews, setTutorReviews] = useState([]);
   const [review_content, setReviewContent] = useState("");
 
   const userId = searchParams.get("id");
@@ -21,6 +22,14 @@ export default function UserProfile() {
       .then((res) => res.json())
       .then((value) => setListings(value));
   }, []);
+
+  useEffect(() => {
+    fetch(`/api/tutor-reviews?id=${userId}`)
+      .then((res) => res.json())
+      .then((value) => setTutorReviews(value));
+  }, []);
+
+  console.log(tutorReviews);
 
   return (
     <>
@@ -121,6 +130,12 @@ export default function UserProfile() {
                 </p>
               )}
             </section>
+            <section className="listing-page-description">
+              <h2>Avis</h2>
+              {tutorReviews.map((review) => {
+                return <p>{review.content}</p>;
+              })}
+            </section>
 
             <section className="listing-page-description">
               <h2>Annonces de {user.first_name}</h2>
@@ -168,7 +183,9 @@ export default function UserProfile() {
               {user.number_of_reviews}
               <span> avis</span>
             </p>
-            <button className="listing-page-cta">Contacter le professeur</button>
+            <button className="listing-page-cta">
+              Contacter le professeur
+            </button>
             <p className="listing-page-note">
               Pour votre sécurité, échangez uniquement via Ustadi.
             </p>
