@@ -122,9 +122,8 @@ export default function Listing() {
     if (min_price) params.set("min_price", min_price);
     if (max_price) params.set("max_price", max_price);
     if (query) params.set("query", query.trim());
-    fetch(`/api/listings?${params}`)
-      .then((res) => res.json())
-      .then((data) => setListings(data));
+    fetch(`/api/listings?${params}`).then((res) => res.json())
+    .then((data) => setListings(data));
   }, [
     selectedSubject,
     selectedLocation,
@@ -387,30 +386,35 @@ export default function Listing() {
               width: 100 + "%",
               display: "flex",
               flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center"
             }}
           >
-            <div className="listing">
-              (listings.length == 0 ? <div className="loader"></div> : {listings.length === 0 ? (
-                <p
-                  style={{
-                    gridColumn: "1 / -1",
-                    color: "var(--grey-500)",
-                    fontSize: 14,
-                  }}
-                >
-                  Aucun professeur ne correspond à vos filtres. Essayez de les
-                  retirer.
-                </p>
-              ) : (
-                listings
-                  .slice(
-                    (pageNumber - 1) * MAX_LISTING_PER_PAGE,
-                    pageNumber * MAX_LISTING_PER_PAGE,
-                  )
-                  .map((p) => <ListingCard element={p} key={p.listing_id} />)
-              )})
-              
-            </div>
+            {listings.length == 0 ? (
+              <div className="loader"></div>
+            ) : (
+              <div className="listing">
+                {listings.length === 0 ? (
+                  <p
+                    style={{
+                      gridColumn: "1 / -1",
+                      color: "var(--grey-500)",
+                      fontSize: 14,
+                    }}
+                  >
+                    Aucun professeur ne correspond à vos filtres. Essayez de les
+                    retirer.
+                  </p>
+                ) : (
+                  listings
+                    .slice(
+                      (pageNumber - 1) * MAX_LISTING_PER_PAGE,
+                      pageNumber * MAX_LISTING_PER_PAGE,
+                    )
+                    .map((p) => <ListingCard element={p} key={p.listing_id} />)
+                )}
+              </div>
+            )}
             {listings.length / MAX_LISTING_PER_PAGE > 1 && (
               <div className="page-button">
                 <button

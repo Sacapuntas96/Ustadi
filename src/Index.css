@@ -1719,14 +1719,12 @@ a.nav-link {
 
  /* Loader */
   .loader{
-    width: 200px;
-    height: 200px;
+    width: 100px;
+    height: 100px;
     border-radius: 999px;
     background-color: white;
-    border: 16px solid var(--grey-300);
-    border-top: 16px solid var(--deep);
-    position: fixed;
-    top: 200px;
+    border: 10px solid var(--grey-300);
+    border-top: 10px solid var(--deep);
     animation: spin 1s linear infinite;
   }
 
