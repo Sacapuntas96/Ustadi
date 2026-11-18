@@ -5,7 +5,7 @@ import { Link, useSearchParams } from "react-router-dom";
 export default function UserProfile() {
   const [user, setUser] = useState({});
   const [listings, setListings] = useState([]);
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParm] = useSearchParams();
   const [review_content, setReviewContent] = useState("");
 
   const userId = searchParams.get("id");
@@ -14,13 +14,13 @@ export default function UserProfile() {
     fetch(`/api/users?id=${userId}`)
       .then((res) => res.json())
       .then((value) => setUser(...value));
-  }, [userId]);
+  }, []);
 
   useEffect(() => {
     fetch(`/api/listings?author_id=${userId}`)
       .then((res) => res.json())
       .then((value) => setListings(value));
-  }, [userId]);
+  }, []);
 
   return (
     <>

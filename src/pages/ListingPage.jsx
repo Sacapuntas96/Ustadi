@@ -14,10 +14,12 @@ export default function ListingPage() {
   }, []);
 
   useEffect(() => {
+    if (!listingData.author_id) return;
     fetch(`/api/users?id=${listingData.author_id}`)
       .then((res) => res.json())
       .then((value) => setPublisherData(...value));
-  }, []);
+  }, [listingData
+  ]);
 
   const [review_content, setReviewContent] = useState("");
   return (
@@ -137,6 +139,7 @@ export default function ListingPage() {
                 <Link
                   className="nav-link"
                   style={{ color: "#ff8f3c", fontWeight: 600 }}
+                  to={`/user-profile?id=${listingData.author_id}`}
                 >
                   {publisherData.last_name ?? "(aucun nom de famille fourni)"} {publisherData.first_name}
                 </Link>
