@@ -2,99 +2,83 @@ import { Link, useSearchParams } from "react-router-dom";
 import "../Index.css";
 import { useState } from "react";
 
+const MIN_AGE = 16;
+
+const years_ago = (years) => {
+  const d = new Date();
+  d.setFullYear(d.getFullYear() - years);
+  return d.toLocaleDateString("en-CA");
+};
+
+const MAX_BIRTH = years_ago(MIN_AGE);
+const MIN_BIRTH = years_ago(100);
+
+const name_error = (name) => {
+  const n = name.trim();
+  return (
+    n.length < 2 ||
+    n.length > 50 ||
+    !/^[\p{L}][\p{L}\s'-]*$/u.test(n) ||
+    /(.)\1{2,}/.test(n)
+  );
+};
+
+const phone_error = (phone) => {
+  const p = phone.replace(/[\s.-]/g, "");
+  return !/^(?:0|\+212|00212)[5-7]\d{8}$/.test(p);
+};
+
+const email_error = (mail) => {
+  return !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail.trim());
+};
+
+const password_error = (pass) => {
+  return pass.length < 8 || !/\d/.test(pass) || !/[A-Za-z]/.test(pass);
+};
+
+const birth_date_error = (value) => {
+  return !value || value > MAX_BIRTH || value < MIN_BIRTH;
+};
+
 export default function Signin() {
-  const SUBJECTS = [
-    "Français",
-    "Arabe",
-    "Amazighe",
-    "Anglais",
-    "Espagnol",
-    "Mathématiques",
-    "Physique-Chimie",
-    "Sciences de la Vie et de la Terre (SVT)",
-    "Histoire-Géographie",
-    "Éducation islamique",
-    "Philosophie",
-    "Informatique",
-    "Technologie",
-    "Éducation physique et sportive",
-    "Éducation artistique",
-  ];
-
-  const GRADES = [
-    "CP",
-    "CE1",
-    "CE2",
-    "CM1",
-    "CM2",
-    "6ème",
-    "5ème",
-    "4ème",
-    "3ème",
-    "Seconde",
-    "Première",
-    "Terminale",
-    "Bac+1",
-    "Bac+2",
-    "Bac+3",
-  ];
-
-  const [searchParms, setSearchParm] = useSearchParams();
-  const passed_type = searchParms.get("type");
+  const [searchParams] = useSearchParams();
+  const passed_type = searchParams.get("type");
 
   const [role, setRole] = useState(passed_type || "student");
   const [first_name, setFirstName] = useState("");
-  const [last_name, setLasttName] = useState("");
+  const [last_name, setLastName] = useState("");
+  const [birthDate, setBirthDate] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordconfirm, setPasswordConfirm] = useState("");
   const [errors, setErrors] = useState({});
 
-  const name_error = (name) => {
-    const n = name.trim();
-    return (
-      n.length < 2 ||
-      n.length > 50 ||
-      !/^[\p{L}][\p{L}\s'-]*$/u.test(n) ||
-      /(.)\1{2,}/.test(n)
-    );
-  };
-
-  const phone_error = (phone) => {
-    const p = phone.replace(/[\s.-]/g, "");
-    return !/^(?:0|\+212|00212)[5-7]\d{8}$/.test(p);
-  };
-
-  const email_error = (mail) => {
-    return !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail.trim());
-  };
-
-  const password_error = (pass) => {
-    return pass.length < 8 || !/\d/.test(pass) || !/[A-Za-z]/.test(pass);
-  };
-
   const clearError = (...fields) => {
-    const updated = { ...errors };
-    fields.forEach((field) => {
-      updated[field] = false;
+    setErrors((previous) => {
+      const updated = { ...previous };
+      fields.forEach((field) => {
+        updated[field] = false;
+      });
+      return updated;
     });
-    setErrors(updated);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
     const newErrors = {
-      last_name: name_error(last_name),
       first_name: name_error(first_name),
+      last_name: name_error(last_name),
+      birth_date: birth_date_error(birthDate),
       phone: phone_error(phoneNumber),
       email: email_error(email),
       password: password_error(password),
       confirm: password !== passwordconfirm,
     };
     setErrors(newErrors);
-    if (!Object.values(newErrors).includes(true)) {
-      console.log("ok", { role });
-    }
+
+    if (Object.values(newErrors).includes(true)) return;
   };
 
   return (
@@ -108,7 +92,7 @@ export default function Signin() {
           </Link>
         </div>
         <div className="filler">
-          <form>
+          <form onSubmit={handleSubmit} noValidate>
             <div className="field">
               <label>Je suis</label>
               <div
@@ -132,6 +116,7 @@ export default function Signin() {
                 </button>
               </div>
             </div>
+
             <div>
               <div className="field">
                 <label>Nom</label>
@@ -139,7 +124,7 @@ export default function Signin() {
                   type="text"
                   value={last_name}
                   onChange={(e) => {
-                    setLasttName(e.target.value);
+                    setLastName(e.target.value);
                     clearError("last_name");
                   }}
                   placeholder="Dupont"
@@ -164,6 +149,26 @@ export default function Signin() {
                 )}
               </div>
             </div>
+
+            <div className="field">
+              <label>Date de naissance</label>
+              <input
+                type="date"
+                value={birthDate}
+                min={MIN_BIRTH}
+                max={MAX_BIRTH}
+                onChange={(e) => {
+                  setBirthDate(e.target.value);
+                  clearError("birth_date");
+                }}
+              />
+              {errors.birth_date && (
+                <p className="error">
+                  Date de naissance invalide ({MIN_AGE} ans minimum)
+                </p>
+              )}
+            </div>
+
             <div className="field">
               <label>Numéro de téléphone</label>
               <input
@@ -180,12 +185,14 @@ export default function Signin() {
               />
               {errors.phone && (
                 <p className="error">Numéro de téléphone invalide</p>
-              )}{" "}
+              )}
             </div>
+
             <div className="field">
               <label>E-mail</label>
               <input
                 type="text"
+                autoComplete="email"
                 placeholder="adresse@exemple.com"
                 value={email}
                 onChange={(e) => {
@@ -195,15 +202,16 @@ export default function Signin() {
               />
               {errors.email && <p className="error">E-mail invalide</p>}
             </div>
+
             <div>
               <div className="field">
-                {" "}
                 <label>Mot de passe</label>
                 <input
                   type="password"
+                  autoComplete="new-password"
                   value={password}
-                  onChange={(event) => {
-                    setPassword(event.target.value);
+                  onChange={(e) => {
+                    setPassword(e.target.value);
                     clearError("password", "confirm");
                   }}
                 />
@@ -218,9 +226,10 @@ export default function Signin() {
                 <label>Confirmer mot de passe</label>
                 <input
                   type="password"
+                  autoComplete="new-password"
                   value={passwordconfirm}
-                  onChange={(event) => {
-                    setPasswordConfirm(event.target.value);
+                  onChange={(e) => {
+                    setPasswordConfirm(e.target.value);
                     clearError("confirm");
                   }}
                 />
@@ -229,12 +238,11 @@ export default function Signin() {
                 )}
               </div>
             </div>
+
             <Link to="/login" className="nav-link">
-              <p>Tu possède un compte ?</p>
+              <p>Tu possèdes un compte ?</p>
             </Link>
-            <button type="button" onClick={handleSubmit}>
-              Créér un compte
-            </button>
+            <button type="submit">Créer un compte</button>
           </form>
         </div>
       </div>

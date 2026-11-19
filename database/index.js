@@ -103,6 +103,20 @@ export default {
         .all();
 
       return Response.json(results);
+    } else if(url.pathname == "/api/registration"){
+      const first_name = url.searchParams.get("first_name")
+      const last_name = url.searchParams.get("last_name")
+      const phone = url.searchParams.get("phone")
+      const password = url.searchParams.get("password")
+      const type = url.searchParams.get("type")
+      const email = url.searchParams.get("email")
+
+      /*if(type == "student"){
+        const {results} = env.DB.prepare(
+          "INSERT INTO students VALUES (?, ?, ?, "", )"
+        )
+      }*/
+
     }
 
     return new Response("not found", { status: 404 });
