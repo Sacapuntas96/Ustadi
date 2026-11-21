@@ -1,11 +1,15 @@
 import "../Index.css";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useState } from "react";
 
 export default function Login() {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
+
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const [hasSignedIn, setHasSignedIn] = useState(searchParams.get("signed_in"))
 
   const identifier_error = (value) => {
     return value.trim().length != 8;
@@ -43,6 +47,9 @@ export default function Login() {
           </Link>
         </div>
         <div className="filler">
+          {hasSignedIn && <div className="signing-confirmation">
+            <p>You have signed in successfully !</p>
+          </div>}
           <form>
             <div className="field">
               <label>Je me connecte avec</label>

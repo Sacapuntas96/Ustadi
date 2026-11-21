@@ -1589,6 +1589,7 @@ a.nav-link {
 
 /* Right side: form */
 .container > .filler {
+  position: relative;
   display: flex;
   height: 100%;
   padding: 40px 48px;
@@ -1747,6 +1748,75 @@ a.nav-link {
   text-decoration: underline;
 }
 
+.signing-confirmation {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: auto;
+  width: fit-content;
+  height: fit-content;
+  z-index: 10;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  box-sizing: border-box;
+
+  background: linear-gradient(135deg, #eaffea, #d6f7d4);
+  border: 1px solid #a8dc9f;
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(38, 92, 44, 0.18);
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f5b2a;
+
+  animation: confirmation-in 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.signing-confirmation__icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #4caf50;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.signing-confirmation__text {
+  line-height: 1.4;
+}
+
+.signing-confirmation__text small {
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+  font-weight: 400;
+  color: #3f7b48;
+}
+
+@keyframes confirmation-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .signing-confirmation {
+    animation: none;
+  }
+}
 
 /* ==========================================================
    4. RESPONSIVE AND REDUCED MOTION

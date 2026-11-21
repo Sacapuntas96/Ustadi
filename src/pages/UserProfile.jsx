@@ -12,7 +12,7 @@ export default function UserProfile() {
   const userId = searchParams.get("id");
 
   useEffect(() => {
-    fetch(`/api/users?id=${userId}`)
+    fetch(`/api/tutors?id=${userId}`)
       .then((res) => res.json())
       .then((value) => setUser(...value));
   }, []);
@@ -28,8 +28,6 @@ export default function UserProfile() {
       .then((res) => res.json())
       .then((value) => setTutorReviews(value));
   }, []);
-
-  console.log(tutorReviews);
 
   return (
     <>
@@ -133,7 +131,7 @@ export default function UserProfile() {
             <section className="listing-page-description">
               <h2>Avis</h2>
               {tutorReviews.map((review) => {
-                return <p>{review.content}</p>;
+                return <p key={review.review_id}>{review.content}</p>;
               })}
             </section>
 

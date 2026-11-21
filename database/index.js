@@ -81,12 +81,12 @@ export default {
 
         return Response.json(results);
       }
-    } else if (url.pathname == "/api/users") {
+    } else if (url.pathname == "/api/tutors") {
       const user_id = parseInt(url.searchParams.get("id"));
 
       if (user_id) {
         const { results } = await env.DB.prepare(
-          "SELECT * FROM users WHERE user_id = ?",
+          "SELECT * FROM tutors WHERE user_id = ?",
         )
           .bind(user_id)
           .all();
@@ -103,20 +103,117 @@ export default {
         .all();
 
       return Response.json(results);
-    } else if(url.pathname == "/api/registration"){
-      const first_name = url.searchParams.get("first_name")
-      const last_name = url.searchParams.get("last_name")
-      const phone = url.searchParams.get("phone")
-      const password = url.searchParams.get("password")
-      const type = url.searchParams.get("type")
-      const email = url.searchParams.get("email")
+    } else if (url.pathname == "/api/availability") {
+      const phone = url.searchParams.get("phone");
+      const type = url.searchParams.get("type");
+      const email = url.searchParams.get("email");
 
-      /*if(type == "student"){
-        const {results} = env.DB.prepare(
-          "INSERT INTO students VALUES (?, ?, ?, "", )"
+      if (type == "student") {
+        const { results } = await env.DB.prepare(
+          `
+      SELECT 'student' AS account_type, user_id, email
+      FROM students
+      WHERE LOWER(TRIM(email)) = LOWER(TRIM(?))
+
+      UNION ALL
+
+      SELECT 'tutor' AS account_type, user_id, email
+      FROM tutors
+      WHERE LOWER(TRIM(email)) = LOWER(TRIM(?))
+    `,
         )
-      }*/
+          .bind(email, email)
+          .all();
 
+        return Response.json(results);
+      } else if (type == "tutor") {
+        const { results } = await env.DB.prepare(
+          `
+      SELECT 'student' AS account_type, user_id, email
+      FROM students
+      WHERE LOWER(TRIM(email)) = LOWER(TRIM(?))
+
+      UNION ALL
+
+      SELECT 'tutor' AS account_type, user_id, email
+      FROM tutors
+      WHERE LOWER(TRIM(email)) = LOWER(TRIM(?))
+         OR phone_number = ?
+    `,
+        )
+          .bind(email, email, phone)
+          .all();
+
+        return Response.json(results);
+      }
+    } else if (url.pathname == "/api/registration") {
+      const first_name = url.searchParams.get("first_name");
+      const last_name = url.searchParams.get("last_name");
+      const phone = url.searchParams.get("phone");
+      const password = url.searchParams.get("password");
+      const type = url.searchParams.get("type");
+      const email = url.searchParams.get("email");
+      const birth_date = url.searchParams.get("birth_date");
+
+      if (type === "student") {
+        await env.DB.prepare(
+          `
+            INSERT INTO students (
+                first_name,
+                last_name,
+                email,
+                birth_date,
+                account_creation_date,
+                grade,
+                bio
+            ) VALUES (?, ?, ?, ?, ?, ?, ?)
+        `,
+        )
+          .bind(
+            first_name,
+            last_name,
+            email,
+            birth_date,
+            new Date().toISOString().split("T")[0],
+            null,
+            "",
+          )
+          .run();
+      } else if (type === "tutor") {
+        await env.DB.prepare(
+          `
+            INSERT INTO tutors (
+              first_name,
+              last_name,
+              email,
+              bio,
+              main_subject,
+              main_grade,
+              birth_date,
+              account_creation_date,
+              phone_number,
+              password_hash,
+              city
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          `,
+        )
+          .bind(
+            first_name,
+            last_name,
+            email,
+            "",
+            null,
+            null,
+            birth_date,
+            Math.floor(Date.now() / 1000),
+            phone,
+            password,
+            null,
+          )
+          .run();
+      }
+
+      return Response.json({ success: true });
     }
 
     return new Response("not found", { status: 404 });

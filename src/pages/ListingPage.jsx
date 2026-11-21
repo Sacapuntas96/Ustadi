@@ -15,7 +15,7 @@ export default function ListingPage() {
 
   useEffect(() => {
     if (!listingData.author_id) return;
-    fetch(`/api/users?id=${listingData.author_id}`)
+    fetch(`/api/tutors?id=${listingData.author_id}`)
       .then((res) => res.json())
       .then((value) => setPublisherData(...value));
   }, [listingData

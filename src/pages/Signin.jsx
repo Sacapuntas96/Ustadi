@@ -1,4 +1,4 @@
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import "../Index.css";
 import { useState } from "react";
 
@@ -15,6 +15,7 @@ const MIN_BIRTH = years_ago(100);
 
 const name_error = (name) => {
   const n = name.trim();
+
   return (
     n.length < 2 ||
     n.length > 50 ||
@@ -24,8 +25,7 @@ const name_error = (name) => {
 };
 
 const phone_error = (phone) => {
-  const p = phone.replace(/[\s.-]/g, "");
-  return !/^(?:0|\+212|00212)[5-7]\d{8}$/.test(p);
+  return !/^0[5-7]\d{8}$/.test(normalizePhone(phone));
 };
 
 const email_error = (mail) => {
@@ -40,7 +40,11 @@ const birth_date_error = (value) => {
   return !value || value > MAX_BIRTH || value < MIN_BIRTH;
 };
 
+
+
 export default function Signin() {
+
+  const navigate = useNavigate()
   const [searchParams] = useSearchParams();
   const passed_type = searchParams.get("type");
 
@@ -54,6 +58,26 @@ export default function Signin() {
   const [passwordconfirm, setPasswordConfirm] = useState("");
   const [errors, setErrors] = useState({});
 
+  const [availabilityError, setAvailabilityError] = useState(false);
+
+  const normalizePhone = (phone) => {
+    let p = phone.replace(/[\s.-]/g, "");
+
+    if (p.startsWith("+212")) {
+      p = "0" + p.slice(4);
+    } else if (p.startsWith("00212")) {
+      p = "0" + p.slice(5);
+    } else if (p.startsWith("212")) {
+      p = "0" + p.slice(3);
+    }
+
+    return p;
+  };
+
+  const phone_error = (phone) => {
+    return !/^0[5-7]\d{8}$/.test(normalizePhone(phone));
+  };
+
   const clearError = (...fields) => {
     setErrors((previous) => {
       const updated = { ...previous };
@@ -64,22 +88,60 @@ export default function Signin() {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+  e.preventDefault(); // stops the page reload
 
-    const newErrors = {
-      first_name: name_error(first_name),
-      last_name: name_error(last_name),
-      birth_date: birth_date_error(birthDate),
-      phone: phone_error(phoneNumber),
-      email: email_error(email),
-      password: password_error(password),
-      confirm: password !== passwordconfirm,
-    };
-    setErrors(newErrors);
-
-    if (Object.values(newErrors).includes(true)) return;
+  const newErrors = {
+    first_name: name_error(first_name),
+    last_name: name_error(last_name),
+    birth_date: birth_date_error(birthDate),
+    phone: role === "tutor" ? phone_error(phoneNumber) : false,
+    email: email_error(email),
+    password: password_error(password),
+    confirm: password !== passwordconfirm,
   };
+
+  setErrors(newErrors);
+  setAvailabilityError(false);
+
+  if (Object.values(newErrors).includes(true)) return;
+
+  try {
+    const availabilityParams = new URLSearchParams({
+      type: role,
+      phone: normalizePhone(phoneNumber),
+      email: email.trim(),
+    });
+
+    const availabilityRes = await fetch(`/api/availability?${availabilityParams}`);
+    const taken = await availabilityRes.json();
+
+    if (taken.length !== 0) {
+      setAvailabilityError(true);
+      return;
+    }
+
+    const registrationParams = new URLSearchParams({
+      first_name: first_name.trim(),
+      last_name: last_name.trim(),
+      email: email.trim(),
+      birth_date: birthDate,
+      creation_date: new Date().toISOString(),
+      grade: "null",
+      bio: "null",
+      type: role,
+    });
+
+    const res = await fetch(`/api/registration?${registrationParams}`);
+
+    if (!res.ok) throw new Error("Registration failed");
+
+    navigate("/login?signed_in=true"); 
+  } catch (err) {
+    console.error(err);
+    setAvailabilityError(true);
+  }
+};
 
   return (
     <>
@@ -92,7 +154,7 @@ export default function Signin() {
           </Link>
         </div>
         <div className="filler">
-          <form onSubmit={handleSubmit} noValidate>
+          <form noValidate onSubmit={handleSubmit}>
             <div className="field">
               <label>Je suis</label>
               <div
@@ -103,14 +165,22 @@ export default function Signin() {
                 <button
                   type="button"
                   aria-pressed={role === "student"}
-                  onClick={() => setRole("student")}
+                  onClick={() => {
+                    setRole("student");
+                    setAvailabilityError(false);
+                    setPhoneNumber("");
+                  }}
                 >
                   Élève
                 </button>
                 <button
                   type="button"
                   aria-pressed={role === "tutor"}
-                  onClick={() => setRole("tutor")}
+                  onClick={() => {
+                    setRole("tutor");
+                    setAvailabilityError(false);
+                    setPhoneNumber("");
+                  }}
                 >
                   Professeur
                 </button>
@@ -169,24 +239,26 @@ export default function Signin() {
               )}
             </div>
 
-            <div className="field">
-              <label>Numéro de téléphone</label>
-              <input
-                type="tel"
-                inputMode="tel"
-                autoComplete="tel"
-                maxLength={18}
-                placeholder="06 12 34 56 78"
-                value={phoneNumber}
-                onChange={(e) => {
-                  setPhoneNumber(e.target.value);
-                  clearError("phone");
-                }}
-              />
-              {errors.phone && (
-                <p className="error">Numéro de téléphone invalide</p>
-              )}
-            </div>
+            {role == "tutor" && (
+              <div className="field">
+                <label>Numéro de téléphone</label>
+                <input
+                  type="tel"
+                  inputMode="tel"
+                  autoComplete="tel"
+                  maxLength={18}
+                  placeholder="06 12 34 56 78"
+                  value={phoneNumber}
+                  onChange={(e) => {
+                    setPhoneNumber(e.target.value);
+                    clearError("phone");
+                  }}
+                />
+                {errors.phone && (
+                  <p className="error">Numéro de téléphone invalide</p>
+                )}
+              </div>
+            )}
 
             <div className="field">
               <label>E-mail</label>
@@ -237,6 +309,14 @@ export default function Signin() {
                   <p className="error">Les mots de passe diffèrent</p>
                 )}
               </div>
+            </div>
+            <div>
+              {availabilityError && (
+                <p className="error">
+                  Une adresse e-mail ou un numéro de téléphone est déjà associé
+                  à un compte existant
+                </p>
+              )}
             </div>
 
             <Link to="/login" className="nav-link">
