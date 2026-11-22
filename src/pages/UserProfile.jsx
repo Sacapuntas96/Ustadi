@@ -130,7 +130,8 @@ export default function UserProfile() {
             </section>
             <section className="listing-page-description">
               <h2>Avis</h2>
-              {tutorReviews.map((review) => {
+              {tutorReviews.length == 0 ? <p>Aucun</p> : 
+              tutorReviews.map((review) => {
                 return <p key={review.review_id}>{review.content}</p>;
               })}
             </section>
@@ -178,7 +179,7 @@ export default function UserProfile() {
               <span> annonces</span>
             </p>
             <p className="listing-page-price">
-              {user.number_of_reviews}
+              {tutorReviews.length}
               <span> avis</span>
             </p>
             <button className="listing-page-cta">

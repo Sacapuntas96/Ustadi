@@ -48,7 +48,7 @@ export default function Login() {
         </div>
         <div className="filler">
           {hasSignedIn && <div className="signing-confirmation">
-            <p>You have signed in successfully !</p>
+            <p>Votre compte a été créé avec succès</p>
           </div>}
           <form>
             <div className="field">

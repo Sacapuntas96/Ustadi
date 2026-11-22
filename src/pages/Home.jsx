@@ -37,7 +37,7 @@ export default function Home() {
       text: "Présente-toi, indique la matière et tes disponibilités. Le professeur confirme la séance et le lieu.",
     },
     {
-      title: "Apprends",
+      title: "Participes aux cours particuliers",
       text: "Tu règles directement le professeur au tarif affiché, sans frais cachés.",
     },
   ];

@@ -1,12 +1,17 @@
 import { useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import "./../Index.css";
 
+
 export default function Contact() {
+  const navigate = useNavigate()
   const [review, setReview] = useState(
     useSearchParams()[0].get("content") ?? "",
   );
   const [messageError, setMessageError] = useState(false);
+
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [success, setSuccess] = useState(searchParams.get("success"))
 
   return (
     <>
@@ -47,6 +52,9 @@ export default function Contact() {
         </div>
       </div>
       <main className="contact-content">
+        {success && <div className="signing-confirmation">
+            <p>Votre avis a été envoyé avec succès</p>
+          </div>}
         <section className="contact-container">
           <p className="contact-eyebrow">Contact</p>
           <h1>Contactez nous</h1>
@@ -60,10 +68,14 @@ export default function Contact() {
             onSubmit={(e) => {
               if (review.length >= 15) {
                 fetch(`/api/reviews?content=${review}`);
+                setMessageError(false)
+                navigate("/contact?success=true")
               } else {
                 setMessageError(true);
-                e.preventDefault();
+                
+                
               }
+              e.preventDefault();
             }}
           >
             <label htmlFor="contact-review">Donnez votre avis</label>

@@ -9,7 +9,6 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap");
 
-
 /* ==========================================================
    1. TOKENS AND BASE
    ========================================================== */
@@ -91,7 +90,6 @@ a.nav-link {
   color: var(--error);
   font-weight: 500;
 }
-
 
 /* ==========================================================
    2. COMMON STYLES
@@ -440,11 +438,9 @@ a.nav-link {
   color: #8391a4;
 }
 
-
 /* ==========================================================
    3. PAGES
    ========================================================== */
-
 
 /* ----------------------------------------------------------
    PAGE: Home (Home.jsx)
@@ -711,7 +707,6 @@ a.nav-link {
   line-height: 1.6;
   color: var(--grey-600);
 }
-
 
 /* ----------------------------------------------------------
    PAGE: Listings (Listing.jsx)
@@ -1112,7 +1107,6 @@ a.nav-link {
   color: var(--primary);
 }
 
-
 /* ----------------------------------------------------------
    PAGES: Listing detail (ListingPage.jsx) and
           Teacher profile (UserProfile.jsx)
@@ -1327,7 +1321,6 @@ a.nav-link {
   gap: 16px;
 }
 
-
 /* ----------------------------------------------------------
    PAGE: Contact (Contact.jsx)
    ---------------------------------------------------------- */
@@ -1427,7 +1420,6 @@ a.nav-link {
   font-size: 15px;
 }
 
-
 /* ----------------------------------------------------------
    PAGE: Help (GetHelp.jsx)
    ---------------------------------------------------------- */
@@ -1467,7 +1459,6 @@ a.nav-link {
 .get-help-content a {
   color: var(--primary);
 }
-
 
 /* ----------------------------------------------------------
    PAGE: Privacy policy (PrivacyPolicy.jsx)
@@ -1516,7 +1507,6 @@ a.nav-link {
   margin: 0 0 12px;
   padding-left: 20px;
 }
-
 
 /* ----------------------------------------------------------
    PAGES: Login (Login.jsx), Signin (Signin.jsx),
@@ -1718,21 +1708,25 @@ a.nav-link {
   color: var(--error);
 }
 
- /* Loader */
-  .loader{
-    width: 100px;
-    height: 100px;
-    border-radius: 999px;
-    background-color: white;
-    border: 10px solid var(--grey-300);
-    border-top: 10px solid var(--deep);
-    animation: spin 1s linear infinite;
-  }
+/* Loader */
+.loader {
+  width: 100px;
+  height: 100px;
+  border-radius: 999px;
+  background-color: white;
+  border: 10px solid var(--grey-300);
+  border-top: 10px solid var(--deep);
+  animation: spin 1s linear infinite;
+}
 
-  @keyframes spin{
-    0% {transform: rotate(0deg);}
-    100% {transform: rotate(360deg);}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
   }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
 /* "Mot de passe oublié ?" / "Pas de compte ?" links */
 .container > .filler form .nav-link {
@@ -1774,7 +1768,7 @@ a.nav-link {
   font-weight: 600;
   color: #1f5b2a;
 
-  animation: confirmation-in 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  animation: confirmation-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) forwards, confirmation-out 0.35s cubic-bezier(0.22, 1, 0.36, 1) 5s forwards;
 }
 
 .signing-confirmation__icon {
@@ -1809,6 +1803,17 @@ a.nav-link {
   to {
     opacity: 1;
     transform: translate(-50%, 0) scale(1);
+  }
+}
+
+@keyframes confirmation-out {
+  from {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -10px) scale(0.95);
   }
 }
 
@@ -1872,8 +1877,6 @@ a.nav-link {
   .hiw-intro {
     position: static;
   }
-
- 
 
   /* Listings */
   .listing-container {

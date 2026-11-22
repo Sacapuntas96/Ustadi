@@ -89,7 +89,7 @@ export default function Signin() {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault(); // stops the page reload
+  e.preventDefault(); 
 
   const newErrors = {
     first_name: name_error(first_name),
@@ -126,10 +126,12 @@ export default function Signin() {
       last_name: last_name.trim(),
       email: email.trim(),
       birth_date: birthDate,
+      phone:phoneNumber,
       creation_date: new Date().toISOString(),
       grade: "null",
       bio: "null",
       type: role,
+      password:password,
     });
 
     const res = await fetch(`/api/registration?${registrationParams}`);
@@ -138,7 +140,6 @@ export default function Signin() {
 
     navigate("/login?signed_in=true"); 
   } catch (err) {
-    console.error(err);
     setAvailabilityError(true);
   }
 };

@@ -1,6 +1,7 @@
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    console.log(request.url);
     if (url.pathname == "/api/listings") {
       const listing_id = url.searchParams.get("author_id");
       const subject = url.searchParams.get("subject");
@@ -62,14 +63,16 @@ export default {
       const date = new Date();
 
       await env.DB.prepare(
-        "INSERT INTO reviews (content, user_id, publish_date) VALUES (?, ?, ?)",
+        "INSERT INTO website_reviews (author_id, published_date, content) VALUES (?, ?, ?)",
       )
         .bind(
-          content,
           0,
           date.toISOString().replace("T", " ").replace("Z", "").slice(0, 19),
+          content,
         )
-        .all();
+        .run();
+
+      return Response.json({ success: true });
     } else if (url.pathname == "/api/listing-page") {
       const listing_id = parseInt(url.searchParams.get("id"));
       if (listing_id) {
